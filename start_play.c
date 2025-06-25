@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 15:16:24 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/25 16:54:01 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:09:22 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ int main(void)
 	player = set_player(); //
 	if (!player)
 		return (1); // handle error
-	
+
 }
