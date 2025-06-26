@@ -7,6 +7,37 @@
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 768
 
+# define SPEED 0.1f
+
+typedef enum
+{
+	FORWARD,
+	BACKWARD,
+	STRAFE_LEFT,
+	STRAFE_RIGHT
+};
+
+typedef struct	s_image
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	// int		width;
+	// int		height;
+}	t_image;
+
+typedef struct	s_minimap
+{
+	int	map_width;
+	int	map_height;
+	int	minimap_width;
+	int	minimap_height;
+	int	tile_size_x;
+	int	tile_size_y;
+}	t_minimap;
+
 typedef struct	s_player
 {
 	float	x;
@@ -14,10 +45,19 @@ typedef struct	s_player
 	float	angle;
 }	t_player;
 
-typedef struct	s_window
+typedef struct	s_game
 {
-	void	*mlx;
-	void	*win;
-}	t_window;
+	void		*mlx;
+	void		*win;
+	char		**map;
+	t_image		img;
+	t_player	*player;
+}	t_game;
+
+typedef struct s_data
+{
+	t_game		*game;
+	t_player	*player;
+}	t_data;
 
 #endif
