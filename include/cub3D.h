@@ -1,15 +1,18 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <math.h>
 # include "../libft/include/libft.h"
 # include "../minilibx-linux/mlx.h"
 
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 768
+# define M_PI 3.14159265358979323846
 
-# define SPEED 0.1f
+# define SPEED 0.2f
+# define R_SPEED 0.5f
 
-typedef enum
+enum opcode
 {
 	FORWARD,
 	BACKWARD,
@@ -49,15 +52,15 @@ typedef struct	s_game
 {
 	void		*mlx;
 	void		*win;
-	char		**map;
 	t_image		img;
-	t_player	*player;
+	// t_player	*player;
 }	t_game;
 
 typedef struct s_data
 {
 	t_game		*game;
 	t_player	*player;
+	char		**map;
 }	t_data;
 
 #endif

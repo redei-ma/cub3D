@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 15:16:24 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/26 16:09:41 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:05:48 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	put_pixel_to_image(t_image *img, int x, int y, int color)
 	}
 }
 
-void	draw_player_to_image(t_game *game, int center_x, int center_y, int color)
+void	draw_player_to_image(t_data *data, int center_x, int center_y, int color)
 {
-	const t_minimap	mini = minimap_init(game->map);
+	const t_minimap	mini = minimap_init(data->map);
 	int				radius;
 	int				i;
 	int				j;
@@ -75,16 +75,16 @@ void	draw_player_to_image(t_game *game, int center_x, int center_y, int color)
 		while (i <= radius)
 		{
 			if (i * i + j * j <= radius * radius)
-				put_pixel_to_image(&game->img, center_x + i, center_y + j, color);
+				put_pixel_to_image(&data->game->img, center_x + i, center_y + j, color);
 			i++;
 		}
 		j++;
 	}
 }
 
-void	draw_tile_to_image(t_game *game, int start_x, int start_y, int color)
+void	draw_tile_to_image(t_data *data, int start_x, int start_y, int color)
 {
-	const t_minimap	mini = minimap_init(game->map);
+	const t_minimap	mini = minimap_init(data->map);
 	int				i;
 	int				j;
 
@@ -94,16 +94,16 @@ void	draw_tile_to_image(t_game *game, int start_x, int start_y, int color)
 		i = 0;
 		while (i < mini.tile_size_x)
 		{
-			put_pixel_to_image(&game->img, start_x + i, start_y + j, color);
+			put_pixel_to_image(&data->game->img, start_x + i, start_y + j, color);
 			i++;
 		}
 		j++;
 	}
 }
 
-void	draw_minimap_to_image(t_game *game, t_player player)
+void	draw_minimap_to_image(t_data *data)
 {
-	const t_minimap	mini = minimap_init(game->map);
+	const t_minimap	mini = minimap_init(data->map);
 	int				x;
 	int				y;
 
@@ -113,24 +113,23 @@ void	draw_minimap_to_image(t_game *game, t_player player)
 		x = 0;
 		while (x < mini.map_width)
 		{
-			if (game->map[y][x] == '1')
-				draw_tile_to_image(game, x * mini.tile_size_x, y * mini.tile_size_y, 0xFFFFFF); // walll
-			else if (game->map[y][x] == ' ')
+			if (data->map[y][x] == '1')
+				draw_tile_to_image(data, x * mini.tile_size_x, y * mini.tile_size_y, 0xFFFFFF); // walll
+			else if (data->map[y][x] == ' ')
 				; // space
 			else
-				draw_tile_to_image(game, x * mini.tile_size_x, y * mini.tile_size_y, 0xC0C0C0); // floor or player
+				draw_tile_to_image(data, x * mini.tile_size_x, y * mini.tile_size_y, 0xC0C0C0); // floor or player
 			x++;
 		}
 		y++;
 	}
-	//
-	draw_player_to_image(game, player.x * mini.tile_size_x, player.y * mini.tile_size_y, 0x00FF00);
+	draw_player_to_image(data, data->player->x * mini.tile_size_x, data->player->y * mini.tile_size_y, 0x00FF00);
 }
 
 void	draw_image(t_data *data)
 {
-	draw_minimap_to_image(data->game, player);
-	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+	draw_minimap_to_image(data);
+	mlx_put_image_to_window(data->game->mlx, data->game->win, data->game->img.img, 0, 0);
 }
 
 t_player	*set_player(void)
@@ -142,7 +141,7 @@ t_player	*set_player(void)
 		return (NULL);
 	player->x = 1.5;
 	player->y = 1.5;
-	player->angle = 0.0;
+	player->angle = M_PI;
 	return (player);
 }
 
@@ -173,29 +172,80 @@ t_game	*init_game(void)
 		return (NULL);
 	if (!init_image(game))
 		return (NULL);
-	game->map = create_map(); // have to take parsing map adress
 	return (game);
 }
 
-int	close_window(t_game *game)
+int	close_window(t_data *data)
 {
-	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_window(data->game->mlx, data->game->win);
+	//manca il resto
 	exit(0);
 	return (0);
 }
 
-int	key_hook(int keycode, t_game *game)
+void move_player(t_data *data, t_player *player, int direction)
+{
+	// decidere se fare un funzione diversa per ogni direzione
+	float	new_x;
+	float	new_y;
+	
+	new_x = 0;
+	new_y = 0;
+	if (direction == FORWARD)
+	{
+		new_x = player->x + cos(player->angle) * SPEED;
+		new_y = player->y + sin(player->angle) * SPEED;
+	}
+	else if (direction == BACKWARD)
+	{
+		new_x = player->x - cos(player->angle) * SPEED;
+		new_y = player->y - sin(player->angle) * SPEED;
+	}
+	else if (direction == STRAFE_LEFT)
+	{
+		new_x = player->x + cos(player->angle - M_PI/2) * SPEED;
+		new_y = player->y + sin(player->angle - M_PI/2) * SPEED;
+	}
+	else if (direction == STRAFE_RIGHT)
+	{
+		new_x = player->x + cos(player->angle + M_PI/2) * SPEED;
+		new_y = player->y + sin(player->angle + M_PI/2) * SPEED;
+	}
+	
+	// TODO: Collision detection qui
+	
+	player->x = new_x;
+	player->y = new_y;
+	draw_image(data);
+}
+
+int	key_press(int keycode, t_data *data)
 {
 	if (keycode == 65307) // ESC key
-		close_window(game);
+		close_window(data);
 	else if (keycode == 'w')
-		move_player(game, FORWARD);
+		move_player(data, data->player, FORWARD);
 	else if (keycode == 's')
-		move_player(game, BACKWARD);
+		move_player(data, data->player, BACKWARD);
 	else if (keycode == 'a')
-		move_player(game, STRAFE_LEFT);
+		move_player(data, data->player, STRAFE_LEFT);
 	else if (keycode == 'd')
-		move_player(game, STRAFE_RIGHT);
+		move_player(data, data->player, STRAFE_RIGHT);
+	else if (keycode == 65361) // Freccia sinistra
+	{
+		data->player->angle -= R_SPEED;
+		if (data->player->angle < 0)
+			data->player->angle += 2 * M_PI;
+		draw_image(data);
+	}
+	else if (keycode == 65363) // Freccia destra
+	{
+		data->player->angle += R_SPEED;
+		if (data->player->angle >= 2 * M_PI)
+			data->player->angle -= 2 * M_PI;
+		draw_image(data);
+	}
+	
 	return (0);
 }
 
@@ -209,10 +259,11 @@ int	main(void)
 	data.player = set_player(); // in teoria dovrebbe venire settato nel parsing
 	if (!data.player)
 		return (1); // handle error
+	data.map = create_map(); // have to take parsing map adress
 	draw_image(&data);
 
-	mlx_hook(data.game->win, 17, 0, close_window, data);
-	mlx_key_hook(data.game->win, key_hook, data);
+	mlx_hook(data.game->win, 17, 0, close_window, &data);
+	mlx_hook(data.game->win, 2, 1L << 0, key_press, &data);
 	
 
 	mlx_loop(data.game->mlx);
