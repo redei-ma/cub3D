@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:59:11 by ale               #+#    #+#             */
-/*   Updated: 2025/06/25 21:41:58 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/06/28 02:35:00 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char** argv)
 {
 	t_basic_elements	elements_struct;
 
-	if (!handle_parsing(argc, argv, &elements_struct))
+	if (handle_parsing(argc, argv, &elements_struct) == 0)
 		return (0);
 	printf("NO: %s\n", elements_struct.north_texture);
 	printf("SO: %s\n", elements_struct.south_texture);
@@ -31,9 +31,10 @@ int	main(int argc, char** argv)
 	printf("C: %d\n", elements_struct.ceiling_colours[1]);
 	printf("C: %d\n", elements_struct.ceiling_colours[2]);
 	int i = 0;
-	while(elements_struct.map[i] != NULL)
+	while(elements_struct.map != NULL && elements_struct.map[i] != NULL)
 	{
 		printf(" '%s'\n", elements_struct.map[i]);
 		i++;
 	}
+	free_basic_elements(&elements_struct);
 }

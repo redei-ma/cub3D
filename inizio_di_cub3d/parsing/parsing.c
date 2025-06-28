@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:57:24 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/25 21:26:17 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/06/28 02:35:15 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ int	handle_parsing(int argc, char **argv, t_basic_elements *elements_struct)
 	if (get_basic_elements(elements_struct, fd) == 0)
 		return (0);
 	if (get_map(elements_struct, fd) == 0)
-		return(free_basic_elements(elements_struct), 0);
+		return( 0);
 	return (1);
 }

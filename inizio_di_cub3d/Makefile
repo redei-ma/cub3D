@@ -15,8 +15,10 @@ SRC = parsing/parsing.c\
 		parsing/free_vari.c \
 		parsing/get_map.c \
 		parsing/ft_split_len.c \
+		parsing/validate_map.c \
+		parsing/ft_countlines.c \
 		main.c \
-#		parsing/check_is_playable.c \#
+
 
 OBJ = $(SRC:.c=.o)
 
@@ -46,6 +48,7 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
+	rm -fr ./includes/mlx
 	@$(MAKE) -C $(LIBFT_DIR) fclean --quiet
 
 re: fclean all

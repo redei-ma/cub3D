@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_vari.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 15:58:59 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/25 16:31:28 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:48:38 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 void	free_map(char **map)
 {
 	int i;
-	int j;
 
 	if (map == NULL)
 		return ;
 	i = 0;
-	j = 0;
-	while(map[i])
+		while(map[i])
 	{
 		free(map[i]);
+		i++;
 	}
 	free(map);
 }

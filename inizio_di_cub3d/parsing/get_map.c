@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:06:45 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/25 21:41:28 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/06/28 04:02:46 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,22 @@ char	*create_map_line(int fd)
 	char	*temp;
 	char	*new_line;
 
-	str = malloc(1);
+	str = NULL;/* malloc(1);
 	if (!str)
 		return(error("malloc failed", NULL), NULL);
-	str[0] = '\0';
+	str[0] = '\0'; */
 	new_line = get_next_line(fd);
+	while (new_line && new_line[0] == '\n' && new_line[1] == '\0')
+	{
+		free(new_line);
+		new_line = get_next_line(fd);
+	}
 	if (!new_line)
 	{
-		free(str);
+		//free(str);
 		return (error("no map present in file", NULL), NULL);
 	}
-	while (new_line)
+	while (new_line && new_line[0] != '\n')//capire cosa fare se ci sono linee vuote o linee con solo spazi nella mappa
 	{
 		temp = ft_strjoin(str, new_line);
 		free(new_line);
@@ -83,6 +88,14 @@ char	*create_map_line(int fd)
 			return (error("malloc failed in map_line creation", NULL), NULL);
 		str = temp;
 		new_line = get_next_line(fd);
+	}
+	if (new_line)
+	{
+		while (new_line)
+		{
+			free(new_line);
+			new_line = get_next_line(fd);
+		}
 	}
 	return (str);
 }
@@ -127,11 +140,14 @@ int	get_map(t_basic_elements *str, int fd)
 
 	map_line = create_map_line(fd);
 	if (map_line == NULL)
-		return (0);
-	check_all_characters_are_present(map_line);
+		return (free_basic_elements(str), 0);
+	if (check_all_characters_are_present(map_line) == 0)
+		return (free_basic_elements(str), 0);
 	len = get_longest_line(map_line);
 	str->map = create_map(map_line, len);
 	if(str->map == NULL)
-		return (0);
+		return (free_basic_elements(str), 0);
+	if (validate_map(map_line, str) == 0)
+		return (free_basic_elements(str), 0);
 	return (1);
 }
