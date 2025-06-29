@@ -48,7 +48,7 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
-	rm -fr ./includes/mlx
+	rm -rf ./includes/mlx
 	@$(MAKE) -C $(LIBFT_DIR) fclean --quiet
 
 re: fclean all

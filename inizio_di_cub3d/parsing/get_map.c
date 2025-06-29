@@ -6,7 +6,7 @@
 /*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:06:45 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/28 04:02:46 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/29 00:55:36 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,21 @@ int	check_all_characters_are_present(char *map_line)
 	return (check_characters_array(characters_arr, map_line));
 }
 
+int	check_theres_nothing_after_map(int fd, char *new_line)
+{
+	int	map_is_valid;
+
+	map_is_valid = 1;
+	while (new_line)
+	{
+		if(new_line[0] != '\n' && new_line[1] != '\0')
+			map_is_valid = 0;
+		free(new_line);
+		new_line = get_next_line(fd);
+	}
+	return(map_is_valid);
+}
+
 char	*create_map_line(int fd)
 {
 	char	*str;
@@ -89,14 +104,8 @@ char	*create_map_line(int fd)
 		str = temp;
 		new_line = get_next_line(fd);
 	}
-	if (new_line)
-	{
-		while (new_line)
-		{
-			free(new_line);
-			new_line = get_next_line(fd);
-		}
-	}
+	if (check_theres_nothing_after_map(fd, new_line) == 0)
+		return (error("there should be nothing after the map", str), NULL);
 	return (str);
 }
 

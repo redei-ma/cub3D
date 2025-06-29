@@ -6,7 +6,7 @@
 /*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:01:34 by ale               #+#    #+#             */
-/*   Updated: 2025/06/28 03:57:25 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/29 00:40:09 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ bool	is_target(char c, char *target)
 
 int	fill(char **map, int *size, t_player current, char *target)
 {
-	if ((current.y < 0) || (current.x < 0) || (current.y >= size[1])
-		|| (current.x >= size[0])
-		|| (map[(int) current.y][(int) current.x] == '1'))// !is_target(map[current.y][current.x], target) si puo mettere anche questo con target = "NSEW0 " credo
+	if ((map[(int) current.y][(int) current.x] == '1'))// !is_target(map[current.y][current.x], target) si puo mettere anche questo con target = "NSEW0 " credo
 		return (0);
-	else if(!is_target(map[(int) current.y][(int) current.x], target))
+	else if((current.y <= 0) || (current.x <= 0) || (current.y >= size[1])
+		|| (current.x >= size[0])
+		|| !is_target(map[(int) current.y][(int) current.x], target))
 		{
 			int i = 0;
 			while(map && map[i])
@@ -118,13 +118,13 @@ int	validate_map(char *map_line, t_basic_elements *data)
 	if (!map2)
 		return(0);
 	find_start(map2, &start);
-	map_size[0] = get_longest_line(map_line);
-	map_size[1] = ft_countlines(map2);
-	/* printf("map size 0: %d\n", map_size[0]);
-	printf("map size 1: %d\n", map_size[1]); */
+	map_size[0] = get_longest_line(map_line) -1;
+	map_size[1] = ft_countlines(map2) -1;
+	printf("map size 0: %d\n", map_size[0]);
+	printf("map size 1: %d\n", map_size[1]);
 	data->start_pos = &start;
 	free(map_line);
-	if (map_size[1] < 3 || fill (map2, map_size, start, "NSWE0") == -1)
+	if (fill (map2, map_size, start, "NSWE0") == -1)
 	{
 		free_map(map2);
 		error("invalid map", NULL);
