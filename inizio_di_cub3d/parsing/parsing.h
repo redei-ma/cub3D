@@ -6,7 +6,7 @@
 /*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:58:00 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/28 03:10:05 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/29 17:28:27 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		handle_parsing(int argc, char **argv, t_basic_elements *elements_struct);
 //get_elements
 int		get_colors(t_basic_elements *str, char *new_line, char first_letter);
 int		get_texture(t_basic_elements *str, char *new_line);
-int		get_element(t_basic_elements *str, char *new_line);
+int		get_element(t_basic_elements *str, char *new_line, int fd);
 int		get_basic_elements(t_basic_elements *str, int fd);
 
 //free_vari
@@ -57,7 +57,7 @@ void	free_basic_elements(t_basic_elements *str);
 //get_map
 int		check_characters_array(int *characters_arr, char *map_line);
 int		check_all_characters_are_present(char *map_line);
-char	*create_map_line(int fd);
+char	*create_map_line(int fd, char *str);
 char	**create_map(char *map_line, int len);
 int		get_longest_line(char *map_line);
 int		get_map(t_basic_elements *str, int fd);
@@ -71,3 +71,7 @@ char	**ft_split_len(char const *s, char c, int len, int i);
 //validate_map
 int		fill(char **map, int *size, t_player current, char *target);
 int		validate_map(char *map_line, t_basic_elements *data);
+
+//check_all_characters_are_present
+int		check_characters_array(int *characters_arr, char *map_line);
+int		check_all_characters_are_present(char *map_line);

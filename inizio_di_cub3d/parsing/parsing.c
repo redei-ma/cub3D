@@ -6,7 +6,7 @@
 /*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:57:24 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/28 02:35:15 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/29 18:36:33 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ int	handle_parsing(int argc, char **argv, t_basic_elements *elements_struct)
 	}
 	init_basic_elements(elements_struct);
 	if (get_basic_elements(elements_struct, fd) == 0)
+	{
+		free_basic_elements(elements_struct);
 		return (0);
+	}
 	if (get_map(elements_struct, fd) == 0)
 		return( 0);
 	return (1);

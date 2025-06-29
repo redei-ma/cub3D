@@ -6,7 +6,7 @@
 /*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:01:34 by ale               #+#    #+#             */
-/*   Updated: 2025/06/29 00:40:09 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/30 00:16:28 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ int	fill(char **map, int *size, t_player current, char *target)
 		|| (current.x >= size[0])
 		|| !is_target(map[(int) current.y][(int) current.x], target))
 		{
-			int i = 0;
+			/* int i = 0;
 			while(map && map[i])
-				printf("%s\n", map[i++]);
-			return (-1);}
+				printf("%s\n", map[i++]); */
+			return (-1);
+		}
 	map[(int) current.y][(int) current.x] = '1';
 	 if (fill(map, size, (t_player){current.x - 1, current.y, 0}, target) == -1)
 		return(-1);
@@ -120,8 +121,8 @@ int	validate_map(char *map_line, t_basic_elements *data)
 	find_start(map2, &start);
 	map_size[0] = get_longest_line(map_line) -1;
 	map_size[1] = ft_countlines(map2) -1;
-	printf("map size 0: %d\n", map_size[0]);
-	printf("map size 1: %d\n", map_size[1]);
+/* 	printf("map size 0: %d\n", map_size[0]);
+	printf("map size 1: %d\n", map_size[1]); */
 	data->start_pos = &start;
 	free(map_line);
 	if (fill (map2, map_size, start, "NSWE0") == -1)
