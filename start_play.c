@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_play.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 15:16:24 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/26 17:05:48 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:51:28 by renato           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,47 @@ void	put_pixel_to_image(t_image *img, int x, int y, int color)
 	{
 		dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 		*(unsigned int*)dst = color;
+	}
+}
+
+void	draw_single_ray(t_data *data, float angle, t_minimap mini)
+{
+	float	ray_x;
+	float	ray_y;
+	float	step_x;
+	float	step_y;
+
+	ray_x = data->player->x;
+	ray_y = data->player->y;
+	step_x = cos(angle) * 0.02f;
+	step_y = sin(angle) * 0.02f;
+	while (ray_x >= 0 && ray_x < mini.map_width && 
+		ray_y >= 0 && ray_y < mini.map_height &&
+		data->map[(int)ray_y][(int)ray_x] != '1')
+	{
+		put_pixel_to_image(&data->game->img, 
+			ray_x * mini.tile_size_x, 
+			ray_y * mini.tile_size_y, 
+			0xFF0000);
+		ray_x += step_x;
+		ray_y += step_y;
+	}
+}
+
+void	draw_fov_to_image(t_data *data)
+{
+	const t_minimap	mini = minimap_init(data->map);
+	float			start_angle;
+	float			angle_step;
+	int				i;
+
+	angle_step = FOV_ANGLE / 60;
+	start_angle = data->player->angle - FOV_ANGLE / 2;
+	i = 0;
+	while (i < FOV_RAYS)
+	{
+		draw_single_ray(data, start_angle + i * angle_step, mini);
+		i++;
 	}
 }
 
@@ -124,11 +165,13 @@ void	draw_minimap_to_image(t_data *data)
 		y++;
 	}
 	draw_player_to_image(data, data->player->x * mini.tile_size_x, data->player->y * mini.tile_size_y, 0x00FF00);
+	// vorrei spostarlo in draw_image
 }
 
 void	draw_image(t_data *data)
 {
 	draw_minimap_to_image(data);
+	draw_fov_to_image(data);
 	mlx_put_image_to_window(data->game->mlx, data->game->win, data->game->img.img, 0, 0);
 }
 
@@ -212,7 +255,7 @@ void move_player(t_data *data, t_player *player, int direction)
 		new_y = player->y + sin(player->angle + M_PI/2) * SPEED;
 	}
 	
-	// TODO: Collision detection qui
+	// TODO: Collision detection
 	
 	player->x = new_x;
 	player->y = new_y;
@@ -245,7 +288,6 @@ int	key_press(int keycode, t_data *data)
 			data->player->angle -= 2 * M_PI;
 		draw_image(data);
 	}
-	
 	return (0);
 }
 

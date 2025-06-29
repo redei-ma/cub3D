@@ -11,6 +11,8 @@
 
 # define SPEED 0.2f
 # define R_SPEED 0.5f
+# define FOV_ANGLE (M_PI / 3) // 60 degrees
+# define FOV_RAYS 60 // Number of rays in the field of view
 
 enum opcode
 {

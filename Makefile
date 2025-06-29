@@ -27,7 +27,6 @@ $(NAME): $(LIBFT) $(MINILIBX) $(SRCS)
 	@echo "Compiling $(NAME)..."
 	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(MINILIBX) $(MLXFLAGS) -Iinclude -o $(NAME)
 
-
 clean:
 	@echo "Removing object files..."
 	@$(MAKE) -C $(LIBFT_DIR) clean --quiet
