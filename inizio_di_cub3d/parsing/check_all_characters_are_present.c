@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_all_characters_are_present.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:10:14 by ale               #+#    #+#             */
-/*   Updated: 2025/06/29 16:36:31 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/30 19:22:17 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 int	check_characters_array(int *characters_arr, char *map_line)
 {
 	if (characters_arr[2] > 1)
-		return(error("too many starting points", map_line), 0);
+		return (error("too many starting points", map_line), 0);
 	if (characters_arr[0] == 0)
-		return(error("no walls in map", map_line), 0);
+		return (error("no walls in map", map_line), 0);
 	if (characters_arr[2] == 0)
-		return(error("no starting point in map", map_line), 0);
+		return (error("no starting point in map", map_line), 0);
 	return (1);
 }
 
@@ -32,6 +32,7 @@ void	init_characters_array(int *i, int characters_arr[3])
 		characters_arr[*i] = 0;
 		(*i)++;
 	}
+	*i = 0;
 }
 
 //function checks that all the 5 parts of the map are present

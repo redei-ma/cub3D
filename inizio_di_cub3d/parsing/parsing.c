@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:57:24 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/29 18:36:33 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/30 20:17:08 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	init_basic_elements(t_basic_elements *str)
 	str->map = NULL;
 }
 
-int	handle_parsing(int argc, char **argv, t_basic_elements *elements_struct)
+int	handle_parsing(int argc, char **argv, t_basic_elements *elements_struct, \
+	t_player *start)
 {
 	int	fd;
 
@@ -80,7 +81,8 @@ int	handle_parsing(int argc, char **argv, t_basic_elements *elements_struct)
 		free_basic_elements(elements_struct);
 		return (0);
 	}
-	if (get_map(elements_struct, fd) == 0)
-		return( 0);
+	if (get_map(elements_struct, fd, start) == 0)
+		return (close(fd), 0);
+	close(fd);
 	return (1);
 }

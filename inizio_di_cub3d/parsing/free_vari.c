@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_vari.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 15:58:59 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/28 01:48:38 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/30 20:19:07 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	free_map(char **map)
 {
-	int i;
+	int	i;
 
 	if (map == NULL)
 		return ;
 	i = 0;
-		while(map[i])
+	while (map[i])
 	{
 		free(map[i]);
 		i++;
@@ -30,13 +30,28 @@ void	free_map(char **map)
 void	free_basic_elements(t_basic_elements *str)
 {
 	if (str->north_texture != NULL)
+	{
 		free(str->north_texture);
+		str->north_texture = NULL;
+	}
 	if (str->south_texture != NULL)
+	{
 		free(str->south_texture);
+		str->south_texture = NULL;
+	}
 	if (str->west_texture != NULL)
+	{
 		free(str->west_texture);
+		str->west_texture = NULL;
+	}
 	if (str->east_texture != NULL)
+	{
 		free(str->east_texture);
+		str->east_texture = NULL;
+	}
 	if (str->map != NULL)
+	{
 		free_map(str->map);
+		str->map = NULL;
+	}
 }

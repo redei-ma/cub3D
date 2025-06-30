@@ -3,58 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:06:45 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/29 16:19:04 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/30 20:27:10 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-int	check_theres_nothing_after_map(int fd, char *new_line)
-{
-	int	map_is_valid;
-
-	map_is_valid = 1;
-	while (new_line)
-	{
-		if(new_line[0] != '\n' && new_line[1] != '\0')
-			map_is_valid = 0;
-		free(new_line);
-		new_line = get_next_line(fd);
-	}
-	return(map_is_valid);
-}
-
-char	*create_map_line(int fd, char *str)
-{
-	char	*temp;
-	char	*new_line;
-
-	str = NULL;
-	new_line = get_next_line(fd);
-	while (new_line && new_line[0] == '\n' && new_line[1] == '\0')
-	{
-		free(new_line);
-		new_line = get_next_line(fd);
-	}
-	if (!new_line)
-		return (error("no map present in file", NULL), NULL);
-	while (new_line && new_line[0] != '\n')//capire cosa fare se ci sono linee vuote o linee con solo spazi nella mappa
-	{
-		temp = ft_strjoin(str, new_line);
-		free(new_line);
-		free(str);
-		if (!temp)
-			return (error("malloc failed in map_line creation", NULL), NULL);
-		str = temp;
-		new_line = get_next_line(fd);
-	}
-	if (check_theres_nothing_after_map(fd, new_line) == 0)
-		return (error("there should be nothing after the map", str), NULL);
-	return (str);
-}
 
 char	**create_map(char *map_line, int len)
 {
@@ -89,7 +45,7 @@ int	get_longest_line(char *map_line)
 	return (max);
 }
 
-int	get_map(t_basic_elements *str, int fd)
+int	get_map(t_basic_elements *str, int fd, t_player *start)
 {
 	int		len;
 	char	*map_line;
@@ -101,9 +57,9 @@ int	get_map(t_basic_elements *str, int fd)
 		return (free_basic_elements(str), 0);
 	len = get_longest_line(map_line);
 	str->map = create_map(map_line, len);
-	if(str->map == NULL)
+	if (str->map == NULL)
 		return (free_basic_elements(str), 0);
-	if (validate_map(map_line, str) == 0)
+	if (validate_map(map_line, str, start) == 0)
 		return (free_basic_elements(str), 0);
 	return (1);
 }

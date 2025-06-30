@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:59:11 by ale               #+#    #+#             */
-/*   Updated: 2025/06/28 02:35:00 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/30 20:38:28 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 int	main(int argc, char** argv)
 {
 	t_basic_elements	elements_struct;
+	t_player			player;
 
-	if (handle_parsing(argc, argv, &elements_struct) == 0)
+	if (handle_parsing(argc, argv, &elements_struct, &player) == 0)
 		return (0);
 	printf("NO: %s\n", elements_struct.north_texture);
 	printf("SO: %s\n", elements_struct.south_texture);
@@ -36,5 +37,11 @@ int	main(int argc, char** argv)
 		printf(" '%s'\n", elements_struct.map[i]);
 		i++;
 	}
+//	elements_struct.start_pos->angle += 1;
+//	elements_struct.start_pos->x += 1;
+//	elements_struct.start_pos->y += 1;
+	printf("angle: %f\2\n", elements_struct.start_pos->angle);
+	printf("x: %f\2\n", elements_struct.start_pos->x);
+	printf("y: %f\2\n", elements_struct.start_pos->y);
 	free_basic_elements(&elements_struct);
 }

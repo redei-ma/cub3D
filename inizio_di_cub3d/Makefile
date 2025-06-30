@@ -17,7 +17,11 @@ SRC = parsing/parsing.c\
 		parsing/ft_split_len.c \
 		parsing/validate_map.c \
 		parsing/ft_countlines.c \
+		parsing/ft_strjoin_m.c \
 		parsing/check_all_characters_are_present.c \
+		parsing/get_colors.c \
+		parsing/get_texture.c \
+		parsing/create_map_line.c \
 		main.c \
 
 

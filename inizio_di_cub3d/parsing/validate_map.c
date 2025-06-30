@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:01:34 by ale               #+#    #+#             */
-/*   Updated: 2025/06/30 00:16:28 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/30 20:40:30 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,64 +25,41 @@ bool	is_target(char c, char *target)
 
 int	fill(char **map, int *size, t_player current, char *target)
 {
-	if ((map[(int) current.y][(int) current.x] == '1'))// !is_target(map[current.y][current.x], target) si puo mettere anche questo con target = "NSEW0 " credo
+	if (map[(int) current.y][(int) current.x] == '1')
+	{
 		return (0);
-	else if((current.y <= 0) || (current.x <= 0) || (current.y >= size[1])
-		|| (current.x >= size[0])
-		|| !is_target(map[(int) current.y][(int) current.x], target))
-		{
-			/* int i = 0;
-			while(map && map[i])
-				printf("%s\n", map[i++]); */
-			return (-1);
-		}
+	}
+	else if ((current.y <= 0) || (current.x <= 0) || (current.y >= size[1]) \
+			|| (current.x >= size[0]) \
+			|| !is_target(map[(int) current.y][(int) current.x], target))
+	{
+		return (-1);
+	}
 	map[(int) current.y][(int) current.x] = '1';
-	 if (fill(map, size, (t_player){current.x - 1, current.y, 0}, target) == -1)
-		return(-1);
+	if (fill(map, size, (t_player){current.x - 1, current.y, 0}, target) == -1)
+		return (-1);
 	if (fill(map, size, (t_player){current.x + 1, current.y, 0}, target) == -1)
-		return(-1);
+		return (-1);
 	if (fill(map, size, (t_player){current.x, current.y - 1, 0}, target) == -1)
-		return(-1);
+		return (-1);
 	if (fill(map, size, (t_player){current.x, current.y + 1, 0}, target) == -1)
-		return(-1);
+		return (-1);
 	return (1);
 }
 
-/*
-void	check_map_is_playable(char **map2, char *map_line)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (map2[y] != NULL)
-	{
-		x = 0;
-		while (map2[y][x] != '\0')
-		{
-			if (map2[y][x] == '0' || map2[y][x] == '1' || map2[y][x] == 'N' || \
-				map2[y][x] == 'S' || map2[y][x] == 'E' || map2[y][x] == 'W') // da rivedere
-			{
-				error ("map is not playble", map_line);
-			}
-			x++;
-		}
-		y++;
-	}
-} */
-int	get_starting_angle(char starting_position)
+float	get_starting_angle(char starting_position)
 {
 	float	starting_angle;
 
 	if (starting_position == 'N')
-		starting_angle = 0;
-	if (starting_position == 'E')
-		starting_angle = M_PI / 2;
-	if (starting_position == 'S')
-		starting_angle = M_PI;
-	if (starting_position == 'W')
 		starting_angle = (M_PI * 3) / 2;
-	return(starting_angle);
+	if (starting_position == 'E')
+		starting_angle = 0;
+	if (starting_position == 'S')
+		starting_angle = M_PI / 2;
+	if (starting_position == 'W')
+		starting_angle = M_PI;
+	return (starting_angle);
 }
 
 void	find_start(char **map, t_player *start)
@@ -109,23 +86,20 @@ void	find_start(char **map, t_player *start)
 	}
 }
 
-int	validate_map(char *map_line, t_basic_elements *data)
+int	validate_map(char *map_line, t_basic_elements *data, t_player *start)
 {
 	char		**map2;
-	t_player	start;
 	int			map_size[2];
 
 	map2 = create_map(map_line, get_longest_line(map_line));
 	if (!map2)
-		return(0);
-	find_start(map2, &start);
+		return (0);
+	find_start(map2, start);
 	map_size[0] = get_longest_line(map_line) -1;
 	map_size[1] = ft_countlines(map2) -1;
-/* 	printf("map size 0: %d\n", map_size[0]);
-	printf("map size 1: %d\n", map_size[1]); */
-	data->start_pos = &start;
+	data->start_pos = start;
 	free(map_line);
-	if (fill (map2, map_size, start, "NSWE0") == -1)
+	if (fill (map2, map_size, *start, "NSWE0") == -1)
 	{
 		free_map(map2);
 		error("invalid map", NULL);

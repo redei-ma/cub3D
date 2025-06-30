@@ -3,133 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   get_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 23:37:56 by ale               #+#    #+#             */
-/*   Updated: 2025/06/30 00:15:55 by ale              ###   ########.fr       */
+/*   Updated: 2025/06/30 20:39:47 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	get_colors(t_basic_elements *str, char *new_line, char first_letter)
-{
-	int	i;
-	int	j;
-	int	num;
-
-	i = 2;
-	j = 0;
-	while (j < 3)
-	{
-		if (j != 0)
-			i = 0;
-		while (new_line[i] == ' ')
-			i++;
-		if (new_line[i] == '\0')
-			return (error("incorrect syntax", NULL), 0);
-		new_line = new_line + i;
-		i = 0;
-		if (new_line[i] == '+')
-			i++;
-		while (new_line[i] >= '0' && new_line[i] <= '9')
-			i++;
-		if (i == 0 || (new_line[0] == '+' && i > 4) || \
-			(new_line[0] != '+' && i > 3) || (j != 2 && new_line[i] != ','))
-			return (error("incorrect syntax", NULL), 0);
-		num = ft_atoi(new_line);
-		if (!(num >= 0 && num <= 255))
-			return (error("numbers for colors must be between 0 and 255", NULL), 0);
-		if (first_letter == 'F')
-			str->floor_colours[j] = num;
-		if (first_letter == 'C')
-			str->ceiling_colours[j] = num;
-		if (j != 2)
-			new_line = new_line + i + 1;
-		if (j == 2)
-		{
-			int z = 0;
-			while(new_line[i + z] == ' ')
-				z++;
-			if(new_line[i + z] != '\n')
-				return (error("incorrect syntax", NULL), 0);
-		}
-		j++;
-	}
-	return (1);
-}
-
-int	check_theres_nothing_after_texture(char *new_line, int len)
-{
-	while(new_line[len] == ' ')
-		len++;
-	if(new_line[len] != '\n')
-		return (0);
-	return (1);
-}
-
-int	check_texture_is_valid(char *texture)
-{
-	if (access(texture, R_OK) == -1)
-	{
-		free(texture);
-		error("texture path is invalid", NULL);
-		return (0);
-	}
-	return (1);
-}
-
-int	get_texture(t_basic_elements *str, char *new_line)
-{
-	int		i;
-	int		len;
-	char	*texture;
-
-	i = 2;
-	while (new_line[i] == ' ')
-		i++;
-	if (new_line[i] == '\0')
-		return (error("incorrect syntax", NULL), 0);
-	len = i;
-	while (new_line[len] != ' ' && new_line[len] != '\0' && !(new_line[len] >= 9 && new_line[len] <= 13))
-		len++;
-	if (check_theres_nothing_after_texture(new_line, len) == 0)
-		return (error("incorrect syntax", NULL), 0);
-	texture = malloc(sizeof(char) * (len - i + 1));
-	if (!texture)
-		return (error("malloc failed", NULL), 0);
-	ft_strlcpy(texture, &new_line[i], len - i + 1);
-	if (check_texture_is_valid(texture) == 0)
-		return (0);
-	if (new_line[0] == 'N')
-		str->north_texture = texture;
-	if (new_line[0] == 'S')
-		str->south_texture = texture;
-	if (new_line[0] == 'W')
-		str->west_texture = texture;
-	if (new_line[0] == 'E')
-		str->east_texture = texture;
-	return (1);
-}
-
 int	get_element(t_basic_elements *str, char *new_line, int fd)
 {
 	(void) fd;
-	if (ft_strncmp(new_line, "NO", 2) == 0 && new_line[2] == ' ')
+	if (ft_strncmp(new_line, "NO", 2) == 0)
 		return (get_texture(str, new_line));
-	else if (ft_strncmp(new_line, "SO", 2) == 0 && new_line[2] == ' ')
+	else if (ft_strncmp(new_line, "SO", 2) == 0)
 		return (get_texture(str, new_line));
-	else if (ft_strncmp(new_line, "WE", 2) == 0 && new_line[2] == ' ')
+	else if (ft_strncmp(new_line, "WE", 2) == 0)
 		return (get_texture(str, new_line));
-	else if (ft_strncmp(new_line, "EA", 2) == 0 && new_line[2] == ' ')
+	else if (ft_strncmp(new_line, "EA", 2) == 0)
 		return (get_texture(str, new_line));
-	else if (new_line[0] == 'F' && new_line[1] == ' ')
+	else if (new_line[0] == 'F')
 		return (get_colors(str, new_line, new_line[0]));
-	else if (new_line[0] == 'C' && new_line[1] == ' ')
+	else if (new_line[0] == 'C')
 		return (get_colors(str, new_line, new_line[0]));
 	else
 	{
-		error("incorrect syntax", NULL);//non molto bello come errore magari cambiarlo
+		error("incorrect syntax", NULL);
 		return (0);
 	}
 }
@@ -148,6 +48,16 @@ bool	skip_empty_line_and_initial_spaces(int *i, char *new_line)
 	return (skip_line);
 }
 
+void	finish_get_next_line(char *new_line, int fd)
+{
+	while (new_line)
+	{
+		free(new_line);
+		new_line = get_next_line(fd);
+	}
+	close(fd);
+}
+
 int	get_basic_elements(t_basic_elements *str, int fd)
 {
 	char	*new_line;
@@ -164,23 +74,14 @@ int	get_basic_elements(t_basic_elements *str, int fd)
 		{
 			if (new_line != NULL)
 				free(new_line);
-			new_line = get_next_line(fd);//non la sto mai freeando
+			new_line = get_next_line(fd);
 			if (!new_line)
-				return (error("empty file or element missing", NULL), 0);
+				return (error("incorrect syntax", 0), close(fd), 0);
 			skip_line = skip_empty_line_and_initial_spaces(&i, new_line);
 		}
 		if (!get_element(str, &new_line[i], fd))
-			{
-				while (new_line)
-				{
-					free(new_line);
-					new_line = get_next_line(fd);
-				}
-				return (free(new_line), 0);
-			}
+			return (finish_get_next_line(new_line, fd), 0);
 		elements_found++;
-	/*	write(2, ft_itoa(elements_found), ft_strlen_m(ft_itoa(elements_found)));
-		write(2, new_line, ft_strlen_m(new_line)); */
 	}
 	free(new_line);
 	return (1);

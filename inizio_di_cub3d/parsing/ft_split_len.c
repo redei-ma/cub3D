@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_len.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 17:04:47 by ade-ross          #+#    #+#             */
+/*   Updated: 2025/06/30 17:05:42 by ade-ross         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parsing.h"
 
-// cerca quante stringhe vanno create
 static int	n_of_st_m(char const *s, char c, int *flag, int *j)
 {
 	int	count;
@@ -36,7 +46,6 @@ static char	**free_malloc_m(char **arr)
 	return (NULL);
 }
 
-
 static char	*copy_word(char *arrst, char const *s, char c, int len)
 {
 	int	j;
@@ -47,7 +56,7 @@ static char	*copy_word(char *arrst, char const *s, char c, int len)
 		arrst[j] = s[j];
 		j++;
 	}
-	while(j < len)
+	while (j < len)
 	{
 		arrst[j] = ' ';
 		j++;
@@ -56,7 +65,7 @@ static char	*copy_word(char *arrst, char const *s, char c, int len)
 	return (arrst);
 }
 
-char    **malloc_line(char **arrst, int i, int len)
+char	**malloc_line(char **arrst, int i, int len)
 {
 	arrst[i] = malloc((len + 1) * sizeof(char));
 	if (arrst[i] == NULL)
