@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_play.c                                       :+:      :+:    :+:   */
+/*   old.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 15:16:24 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/27 16:51:28 by renato           ###   ########.fr       */
+/*   Updated: 2025/06/30 10:08:56 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,31 @@ char	**create_map(void)
 {
 	char	**map;
 
-	map = malloc(sizeof(char *) * 11);
+	map = malloc(sizeof(char *) * 21);
 	if (!map)
 		return (NULL);
 
-	map[0] = ft_strdup("1111111111");
-	map[1] = ft_strdup("1000000001");
-	map[2] = ft_strdup("1011001101");
-	map[3] = ft_strdup("1010000101");
-	map[4] = ft_strdup("1000110001");
-	map[5] = ft_strdup("1000110001");
-	map[6] = ft_strdup("1010000101");
-	map[7] = ft_strdup("1111N01101");
-	map[8] = ft_strdup("1  1000001");
-	map[9] = ft_strdup("1111111111");
-	map[10] = NULL;
+	map[0] = ft_strdup("11111111111111111111");
+	map[1] = ft_strdup("10000000000000000001");
+	map[2] = ft_strdup("10010000000000010001");
+	map[3] = ft_strdup("10000000000000000001");
+	map[4] = ft_strdup("10000110000110000001");
+	map[5] = ft_strdup("10000000000000000001");
+	map[6] = ft_strdup("10001000000000100001");
+	map[7] = ft_strdup("10000000000000000001");
+	map[8] = ft_strdup("10000001100000000001");
+	map[9] = ft_strdup("10000000000000000001");
+	map[10] = ft_strdup("10001000000000100001");
+	map[11] = ft_strdup("10000000000000000001");
+	map[12] = ft_strdup("10000000110000000001");
+	map[13] = ft_strdup("10000000000000000001");
+	map[14] = ft_strdup("10000000N00000000001");
+	map[15] = ft_strdup("10000000000000000001");
+	map[16] = ft_strdup("10000100000010000001");
+	map[17] = ft_strdup("10000000000000000001");
+	map[18] = ft_strdup("1  0000000000000  1");
+	map[19] = ft_strdup("11111111111111111111");
+	map[20] = NULL;
 
 	return (map);
 }
@@ -42,7 +52,8 @@ t_minimap	minimap_init(char **map)
 	mini.map_width = ft_strlen(map[0]);
 	mini.map_height = ft_countlines((const char **)map);
 	mini.minimap_width = WIN_WIDTH * 0.2;
-	mini.minimap_height = WIN_HEIGHT * 0.2;
+	mini.minimap_height = WIN_HEIGHT * 0.2
+	;
 	mini.tile_size_x = mini.minimap_width / mini.map_width;
 	mini.tile_size_y = mini.minimap_height / mini.map_height;
 	return (mini);
@@ -60,46 +71,22 @@ void	put_pixel_to_image(t_image *img, int x, int y, int color)
 	}
 }
 
-void	draw_single_ray(t_data *data, float angle, t_minimap mini)
-{
-	float	ray_x;
-	float	ray_y;
-	float	step_x;
-	float	step_y;
+// void	draw_fov_to_image(t_data *data)
+// {
+// 	const t_minimap	mini = minimap_init(data->map);
+// 	float			start_angle;
+// 	float			angle_step;
+// 	int				i;
 
-	ray_x = data->player->x;
-	ray_y = data->player->y;
-	step_x = cos(angle) * 0.02f;
-	step_y = sin(angle) * 0.02f;
-	while (ray_x >= 0 && ray_x < mini.map_width && 
-		ray_y >= 0 && ray_y < mini.map_height &&
-		data->map[(int)ray_y][(int)ray_x] != '1')
-	{
-		put_pixel_to_image(&data->game->img, 
-			ray_x * mini.tile_size_x, 
-			ray_y * mini.tile_size_y, 
-			0xFF0000);
-		ray_x += step_x;
-		ray_y += step_y;
-	}
-}
-
-void	draw_fov_to_image(t_data *data)
-{
-	const t_minimap	mini = minimap_init(data->map);
-	float			start_angle;
-	float			angle_step;
-	int				i;
-
-	angle_step = FOV_ANGLE / 60;
-	start_angle = data->player->angle - FOV_ANGLE / 2;
-	i = 0;
-	while (i < FOV_RAYS)
-	{
-		draw_single_ray(data, start_angle + i * angle_step, mini);
-		i++;
-	}
-}
+// 	angle_step = FOV_ANGLE / 60;
+// 	start_angle = data->player->angle - FOV_ANGLE / 2;
+// 	i = 0;
+// 	while (i < FOV_RAYS)
+// 	{
+// 		draw_single_ray(data, start_angle + i * angle_step, mini);
+// 		i++;
+// 	}
+// }
 
 void	draw_player_to_image(t_data *data, int center_x, int center_y, int color)
 {
@@ -171,7 +158,7 @@ void	draw_minimap_to_image(t_data *data)
 void	draw_image(t_data *data)
 {
 	draw_minimap_to_image(data);
-	draw_fov_to_image(data);
+	// draw_fov_to_image(data);
 	mlx_put_image_to_window(data->game->mlx, data->game->win, data->game->img.img, 0, 0);
 }
 
@@ -226,39 +213,99 @@ int	close_window(t_data *data)
 	return (0);
 }
 
-void move_player(t_data *data, t_player *player, int direction)
+// Controlla se una cella è libera
+int	is_free_cell(t_data *data, int x, int y)
 {
-	// decidere se fare un funzione diversa per ogni direzione
+	if (x < 0 || y < 0)
+		return (0);
+	if (y >= ft_countlines((const char **)data->map))
+		return (0);
+	if (x >= (int)ft_strlen(data->map[y]))
+		return (0);
+	if (data->map[y][x] == '1')
+		return (0);
+	return (1);
+}
+
+// Controlla se può muoversi in una posizione
+int	can_move_to(t_data *data, float x, float y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)x;
+	map_y = (int)y;
+	return (is_free_cell(data, map_x, map_y));
+}
+
+// Controlla movimento con margine di sicurezza
+int	can_move_safe(t_data *data, float x, float y)
+{
+	float	margin;
+
+	margin = 0.2f;
+	if (!can_move_to(data, x - margin, y - margin))
+		return (0);
+	if (!can_move_to(data, x + margin, y - margin))
+		return (0);
+	if (!can_move_to(data, x - margin, y + margin))
+		return (0);
+	if (!can_move_to(data, x + margin, y + margin))
+		return (0);
+	return (1);
+}
+
+// Calcola nuova posizione X
+float	calc_new_x(t_player *player, int direction)
+{
+	if (direction == FORWARD)
+		return (player->x + cos(player->angle) * SPEED);
+	if (direction == BACKWARD)
+		return (player->x - cos(player->angle) * SPEED);
+	if (direction == STRAFE_LEFT)
+		return (player->x + cos(player->angle - M_PI / 2) * SPEED);
+	if (direction == STRAFE_RIGHT)
+		return (player->x + cos(player->angle + M_PI / 2) * SPEED);
+	return (player->x);
+}
+
+// Calcola nuova posizione Y
+float	calc_new_y(t_player *player, int direction)
+{
+	if (direction == FORWARD)
+		return (player->y + sin(player->angle) * SPEED);
+	if (direction == BACKWARD)
+		return (player->y - sin(player->angle) * SPEED);
+	if (direction == STRAFE_LEFT)
+		return (player->y + sin(player->angle - M_PI / 2) * SPEED);
+	if (direction == STRAFE_RIGHT)
+		return (player->y + sin(player->angle + M_PI / 2) * SPEED);
+	return (player->y);
+}
+
+// Applica movimento se possibile
+void	apply_movement(t_data *data, float new_x, float new_y)
+{
+	if (can_move_safe(data, new_x, new_y))
+	{
+		data->player->x = new_x;
+		data->player->y = new_y;
+	}
+	else if (can_move_safe(data, new_x, data->player->y))
+		data->player->x = new_x;
+	else if (can_move_safe(data, data->player->x, new_y))
+		data->player->y = new_y;
+}
+
+// Movimento principale del giocatore
+void	move_player(t_data *data, t_player *player, int direction)
+{
 	float	new_x;
 	float	new_y;
-	
-	new_x = 0;
-	new_y = 0;
-	if (direction == FORWARD)
-	{
-		new_x = player->x + cos(player->angle) * SPEED;
-		new_y = player->y + sin(player->angle) * SPEED;
-	}
-	else if (direction == BACKWARD)
-	{
-		new_x = player->x - cos(player->angle) * SPEED;
-		new_y = player->y - sin(player->angle) * SPEED;
-	}
-	else if (direction == STRAFE_LEFT)
-	{
-		new_x = player->x + cos(player->angle - M_PI/2) * SPEED;
-		new_y = player->y + sin(player->angle - M_PI/2) * SPEED;
-	}
-	else if (direction == STRAFE_RIGHT)
-	{
-		new_x = player->x + cos(player->angle + M_PI/2) * SPEED;
-		new_y = player->y + sin(player->angle + M_PI/2) * SPEED;
-	}
-	
-	// TODO: Collision detection
-	
-	player->x = new_x;
-	player->y = new_y;
+
+	new_x = calc_new_x(player, direction);
+	new_y = calc_new_y(player, direction);
+	apply_movement(data, new_x, new_y);
 	draw_image(data);
 }
 

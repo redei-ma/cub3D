@@ -3,7 +3,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -lXext -lX11 -lm -lz
 
-SRCS =	start_play.c
+SRCS =	srcs/main.c \
+		srcs/dda.c \
+		srcs/init.c \
+		srcs/drawing.c \
+		srcs/movement.c \
+		srcs/events.c
 
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
