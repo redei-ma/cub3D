@@ -6,13 +6,13 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:15:44 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/30 15:20:06 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:42:18 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_minimap	minimap_init(char **map)
+t_minimap	init_minimap(char **map)
 {
 	t_minimap	mini;
 

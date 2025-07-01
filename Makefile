@@ -23,8 +23,10 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --quiet
 
 $(MINILIBX):
-	@echo "Cloning MinilibX..."
-	@git clone $(MLX_REPO) $(MINILIBX_DIR) --quiet
+	@if [ ! -d "$(MINILIBX_DIR)" ]; then \
+		echo "Cloning MinilibX..."; \
+		git clone $(MLX_REPO) $(MINILIBX_DIR) --quiet; \
+	fi
 	@echo "Compiling MinilibX..."
 	@$(MAKE) -C $(MINILIBX_DIR) --quiet
 
@@ -35,13 +37,13 @@ $(NAME): $(LIBFT) $(MINILIBX) $(SRCS)
 clean:
 	@echo "Removing object files..."
 	@$(MAKE) -C $(LIBFT_DIR) clean --quiet
-	@$(MAKE) -C $(MINILIBX_DIR) clean --quiet
+	$(MAKE) -C $(MINILIBX_DIR) clean --quiet
 
 fclean: clean
 	@echo "Removing library and executables..."
 	@rm -rf $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --quiet
-	@rm -rf $(MINILIBX_DIR)
+	rm -rf $(MINILIBX_DIR)
 
 re: fclean all
 

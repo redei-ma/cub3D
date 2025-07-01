@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:08:40 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/30 15:35:01 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:42:30 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static void	apply_safe_movement(t_data *data, float delta_x, float delta_y)
 
 	new_x = data->player->x + delta_x;
 	new_y = data->player->y + delta_y;
-	if (check_collision_dda(data, data->player->x, data->player->y, new_x, new_y))
+	if (check_player_collision(data, new_x, new_y))
 	{
 		data->player->x = new_x;
 		data->player->y = new_y;
 	}
-	else if (check_collision_dda(data, data->player->x, data->player->y, new_x, data->player->y))
+	else if (check_player_collision(data, new_x, data->player->y))
 		data->player->x = new_x;
-	else if (check_collision_dda(data, data->player->x, data->player->y, data->player->x, new_y))
+	else if (check_player_collision(data, data->player->x, new_y))
 		data->player->y = new_y;
 }
 
@@ -85,5 +85,5 @@ void	rotate_player(t_data *data, int direction)
 		if (data->player->angle >= 2 * M_PI)
 			data->player->angle -= 2 * M_PI;
 	}
-	draw_image(data);
+	// draw_image(data);
 }

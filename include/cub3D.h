@@ -10,8 +10,10 @@
 
 # define M_PI 3.14159265358979323846
 
-# define SPEED 0.2f
-# define R_SPEED 0.2f
+#define PLAYER_SIZE_RATIO 4
+
+# define SPEED 0.01f
+# define R_SPEED 0.005f
 
 # define FOV_ANGLE (M_PI / 3) // 60 degrees
 # define FOV_RAYS 90 // Number of rays in the field of view
@@ -53,12 +55,12 @@ typedef struct	s_image
 
 typedef struct	s_minimap
 {
-	int	map_width;
-	int	map_height;
-	int	minimap_width;
-	int	minimap_height;
-	int	tile_size_x;
-	int	tile_size_y;
+	int		map_width;
+	int		map_height;
+	float	minimap_width;
+	float	minimap_height;
+	float	tile_size_x;
+	float	tile_size_y;
 }	t_minimap;
 
 typedef struct	s_player
@@ -81,11 +83,12 @@ typedef struct s_data
 	t_game		*game;
 	t_player	*player;
 	char		**map;
+	t_minimap	mini;
 }	t_data;
 
 
 // ========== INIT.C ==========
-t_minimap	minimap_init(char **map);
+t_minimap	init_minimap(char **map);
 t_player	*set_player(void);
 t_game		*init_game(void);
 
@@ -99,17 +102,17 @@ void		move_player(t_data *data, t_player *player, int direction);
 void		rotate_player(t_data *data, int direction);
 
 // ========== EVENTS.C ==========
-int			handle_resize(int width, int height, t_data *data);
-// int			key_release(int keycode, t_data *data);
+int			key_release(int keycode, t_data *data);
 int			key_press(int keycode, t_data *data);
-// int 		game_loop(t_data *data);
+int 		game_loop(t_data *data);
 int			close_window(t_data *data);
 
 // ========== DDA.C ==========
 
 float	cast_ray_dda(t_data *data, float start_x, float start_y, float angle);
-int		check_collision_dda(t_data *data, float start_x, float start_y, 
-		float target_x, float target_y);
+// int		check_collision_dda(t_data *data, float start_x, float start_y, 
+		// float target_x, float target_y);
+int		check_player_collision(t_data *data, float x, float y);
 void	draw_single_ray(t_data *data, float angle, t_minimap mini);
 
 #endif

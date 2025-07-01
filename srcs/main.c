@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:17:34 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/30 15:36:15 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:10:54 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,21 @@ char	**create_map(void)
 int	main(void)
 {
 	t_data	data;
+	t_basic_elements	elements_struct;
+	t_player			player;
 
 	data.game = init_game();
 	if (!data.game)
 		return (1); // handle error
-	data.player = set_player(); // in teoria dovrebbe venire settato nel parsing
-	if (!data.player)
-		return (1); // handle error
-	data.map = create_map(); // have to take parsing map adress
+	data.player = &player;
+	data.map = elements_struct.map;
+	data.mini = init_minimap(data.map);
 	draw_image(&data);
 
 	mlx_hook(data.game->win, 17, 0, close_window, &data);
 	mlx_hook(data.game->win, 2, 1L << 0, key_press, &data);
-	// mlx_hook(data.game->win, 3, 1L << 1, key_release, &data);
-	// mlx_loop_hook(data.game->mlx, game_loop, &data);
+	mlx_hook(data.game->win, 3, 1L << 1, key_release, &data);
+	mlx_loop_hook(data.game->mlx, game_loop, &data);
 
-	
 	mlx_loop(data.game->mlx);
 }

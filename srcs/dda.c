@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:56:47 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/30 14:47:11 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:44:18 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,35 @@ float	cast_ray_dda_limited(t_data *data, float start_x, float start_y, float ang
 	return (distance);
 }
 
-int	check_collision_dda(t_data *data, float start_x, float start_y, float target_x, float target_y)
+int	check_player_collision(t_data *data, float x, float y)
+{
+	float	radius;
+	int		check_x;
+	int		check_y;
+
+	radius = 1.0f / PLAYER_SIZE_RATIO;  // Stesso rapporto del disegno
+	
+	// Controlla 4 angoli del giocatore
+	check_x = (int)(x - radius);
+	check_y = (int)(y - radius);
+	if (is_wall_hit(data, check_x, check_y))
+		return (0);
+	check_x = (int)(x + radius);
+	check_y = (int)(y - radius);
+	if (is_wall_hit(data, check_x, check_y))
+		return (0);
+	check_x = (int)(x - radius);
+	check_y = (int)(y + radius);
+	if (is_wall_hit(data, check_x, check_y))
+		return (0);
+	check_x = (int)(x + radius);
+	check_y = (int)(y + radius);
+	if (is_wall_hit(data, check_x, check_y))
+		return (0);
+	return (1);
+}
+
+/* int	check_collision_dda(t_data *data, float start_x, float start_y, float target_x, float target_y)
 {
 	float	angle;
 	float	distance;
@@ -124,7 +152,7 @@ int	check_collision_dda(t_data *data, float start_x, float start_y, float target
 	wall_distance = cast_ray_dda_limited(data, start_x, start_y, angle);
 	margin = 0.1f;
 	return (distance + margin < wall_distance);
-}
+} */
 
 void	draw_single_ray(t_data *data, float angle, t_minimap mini)
 {

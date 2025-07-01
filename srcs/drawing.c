@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:13:26 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/06/30 15:44:06 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:37:02 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	put_pixel_to_image(t_image img, int x, int y, int color)
 
 void	draw_fov_to_image(t_data *data)
 {
-	const t_minimap	mini = minimap_init(data->map);
 	float			start_angle;
 	float			angle_step;
 	int				i;
@@ -35,19 +34,18 @@ void	draw_fov_to_image(t_data *data)
 	i = 0;
 	while (i < FOV_RAYS)
 	{
-		draw_single_ray(data, start_angle + i * angle_step, mini);
+		draw_single_ray(data, start_angle + i * angle_step, data->mini);
 		i++;
 	}
 }
 
 static void	draw_player_to_image(t_data *data, int center_x, int center_y, int color)
 {
-	const t_minimap	mini = minimap_init(data->map);
 	int				radius;
 	int				i;
 	int				j;
 
-	radius = mini.tile_size_x / 4;
+	radius = data->mini.tile_size_x / PLAYER_SIZE_RATIO;
 	j = -radius;
 	while (j <= radius)
 	{
@@ -64,15 +62,14 @@ static void	draw_player_to_image(t_data *data, int center_x, int center_y, int c
 
 static void	draw_tile_to_image(t_data *data, int start_x, int start_y, int color)
 {
-	const t_minimap	mini = minimap_init(data->map);
 	int				i;
 	int				j;
 
 	j = 0;
-	while (j < mini.tile_size_y)
+	while (j < data->mini.tile_size_y)
 	{
 		i = 0;
-		while (i < mini.tile_size_x)
+		while (i < data->mini.tile_size_x)
 		{
 			put_pixel_to_image(data->game->img, start_x + i, start_y + j, color);
 			i++;
@@ -83,27 +80,26 @@ static void	draw_tile_to_image(t_data *data, int start_x, int start_y, int color
 
 static void	draw_minimap_to_image(t_data *data)
 {
-	const t_minimap	mini = minimap_init(data->map);
 	int				x;
 	int				y;
 
 	y = 0;
-	while (y < mini.map_height)
+	while (y < data->mini.map_height)
 	{
 		x = 0;
-		while (x < mini.map_width)
+		while (x < data->mini.map_width)
 		{
 			if (data->map[y][x] == '1')
-				draw_tile_to_image(data, x * mini.tile_size_x, y * mini.tile_size_y, 0xFFFFFF);
+				draw_tile_to_image(data, x * data->mini.tile_size_x, y * data->mini.tile_size_y, 0xFFFFFF);
 			else if (data->map[y][x] == ' ')
 				;
 			else
-				draw_tile_to_image(data, x * mini.tile_size_x, y * mini.tile_size_y, 0xC0C0C0);
+				draw_tile_to_image(data, x * data->mini.tile_size_x, y * data->mini.tile_size_y, 0xC0C0C0);
 			x++;
 		}
 		y++;
 	}
-	draw_player_to_image(data, data->player->x * mini.tile_size_x, data->player->y * mini.tile_size_y, 0x00FF00);
+	draw_player_to_image(data, data->player->x * data->mini.tile_size_x, data->player->y * data->mini.tile_size_y, 0x00FF00);
 	// vorrei spostarlo in draw_image
 }
 
