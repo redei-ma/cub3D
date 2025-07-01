@@ -13,7 +13,7 @@
 # define R_SPEED 0.02f
 
 # define FOV_ANGLE (M_PI / 3) // 60 degrees
-# define FOV_RAYS 90 // Number of rays in the field of view
+# define FOV_RAYS 300 // Number of rays in the field of view
 # define MAX_VIEW_DISTANCE 8.0f  // Limite di visibilità in unità mappa
 
 enum opcode
