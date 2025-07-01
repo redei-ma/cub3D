@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:16:20 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/01 13:52:19 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:59:42 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ int key_press(int keycode, t_data *data)
 int	close_window(t_data *data)
 {
 	mlx_destroy_window(data->game->mlx, data->game->win);
-	mlx_destroy_window(data->game->mlx, data->game->win);
+	mlx_destroy_image(data->game->mlx, data->game->img.img);
     mlx_destroy_display(data->game->mlx);
     free(data->game->mlx);
-    free(data->player);
     free(data->game);
-	ft_free_char_mat(data->map);
-	//manca il resto di ale
+	free_basic_elements(data->elements);
+	exit(0);
 	return (0);
 }

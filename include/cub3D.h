@@ -2,18 +2,15 @@
 # define CUB3D_H
 
 # include <math.h>
-# include "../libft/include/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "parsing.h"
 
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 768
 
-# define M_PI 3.14159265358979323846
-
 #define PLAYER_SIZE_RATIO 4
 
-# define SPEED 0.01f
-# define R_SPEED 0.005f
+# define SPEED 0.1f
+# define R_SPEED 0.05f
 
 # define FOV_ANGLE (M_PI / 3) // 60 degrees
 # define FOV_RAYS 90 // Number of rays in the field of view
@@ -63,13 +60,6 @@ typedef struct	s_minimap
 	float	tile_size_y;
 }	t_minimap;
 
-typedef struct	s_player
-{
-	float	x;
-	float	y;
-	float	angle;
-}	t_player;
-
 typedef struct	s_game
 {
 	void	*mlx;
@@ -80,10 +70,11 @@ typedef struct	s_game
 
 typedef struct s_data
 {
-	t_game		*game;
-	t_player	*player;
-	char		**map;
-	t_minimap	mini;
+	t_game				*game;
+	t_player			*player;
+	char				**map;
+	t_minimap			mini;
+	t_basic_elements	*elements;
 }	t_data;
 
 

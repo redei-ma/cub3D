@@ -2,8 +2,20 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -lXext -lX11 -lm -lz
+VALGRIND = valgrind  --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes
 
-SRCS =	srcs/main.c \
+SRCS =	srcs/parsing/parsing.c\
+		srcs/parsing/get_elements.c \
+		srcs/parsing/free_vari.c \
+		srcs/parsing/get_map.c \
+		srcs/parsing/ft_split_len.c \
+		srcs/parsing/validate_map.c \
+		srcs/parsing/ft_strjoin_m.c \
+		srcs/parsing/check_all_characters_are_present.c \
+		srcs/parsing/get_colors.c \
+		srcs/parsing/get_texture.c \
+		srcs/parsing/create_map_line.c \
+		srcs/main.c \
 		srcs/dda.c \
 		srcs/init.c \
 		srcs/drawing.c \
@@ -33,6 +45,9 @@ $(MINILIBX):
 $(NAME): $(LIBFT) $(MINILIBX) $(SRCS)
 	@echo "Compiling $(NAME)..."
 	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(MINILIBX) $(MLXFLAGS) -Iinclude -o $(NAME)
+
+val: $(NAME)
+	$(VALGRIND) ./$(NAME) $(ARGS)
 
 clean:
 	@echo "Removing object files..."

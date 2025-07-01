@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:15:44 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/01 12:42:18 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:00:06 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_minimap	init_minimap(char **map)
 	mini.tile_size_x = mini.minimap_width / mini.map_width;
 	mini.tile_size_y = mini.minimap_height / mini.map_height;
 	return (mini);
-	// capire se le variabile posso definirel nel .h dato che in teoria il DDA si basa sulla tile_size della minimappa
 }
 
 t_player	*set_player(void)
@@ -58,12 +57,24 @@ t_game	*init_game(void)
 		return (NULL);
 	game->mlx = mlx_init();
 	if (!game->mlx)
+	{
+		free(game);
 		return (NULL);
+	}
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	if (!game->win)
+	{
+		free(game->mlx);
+		free(game);
 		return (NULL);
+	}
 	if (!init_image(game))
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		free(game->mlx);
+		free(game);
 		return (NULL);
+	}
 	ft_memset(game->keys_pressed, 0, sizeof(game->keys_pressed));
 	return (game);
 }
