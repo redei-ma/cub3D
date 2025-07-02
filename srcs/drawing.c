@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:13:26 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/01 13:37:02 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:26:12 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ static void	draw_minimap_to_image(t_data *data)
 
 void	draw_image(t_data *data)
 {
-	//immagine 3D
+	//put_window_black(data); //serve?
+	draw_3d_to_image(data);
 	draw_minimap_to_image(data);
 	draw_fov_to_image(data);
 	mlx_put_image_to_window(data->game->mlx, data->game->win, data->game->img.img, 0, 0);

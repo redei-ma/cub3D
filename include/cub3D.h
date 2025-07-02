@@ -7,14 +7,13 @@
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 768
 
-#define PLAYER_SIZE_RATIO 4
+#define PLAYER_SIZE_RATIO 3
 
-# define SPEED 0.1f
-# define R_SPEED 0.05f
+# define SPEED 0.035f
+# define R_SPEED 0.02f
 
 # define FOV_ANGLE (M_PI / 3) // 60 degrees
-# define FOV_RAYS 90 // Number of rays in the field of view
-# define MAX_VIEW_DISTANCE 8.0f  // Limite di visibilità in unità mappa
+# define FOV_RAYS 500 // Number of rays in the field of view
 
 enum opcode
 {
@@ -75,6 +74,7 @@ typedef struct s_data
 	char				**map;
 	t_minimap			mini;
 	t_basic_elements	*elements;
+	t_dda				last_dda;
 }	t_data;
 
 
@@ -101,9 +101,14 @@ int			close_window(t_data *data);
 // ========== DDA.C ==========
 
 float	cast_ray_dda(t_data *data, float start_x, float start_y, float angle);
-// int		check_collision_dda(t_data *data, float start_x, float start_y, 
-		// float target_x, float target_y);
 int		check_player_collision(t_data *data, float x, float y);
 void	draw_single_ray(t_data *data, float angle, t_minimap mini);
+
+// ========== DRAWING_3D.C ==========
+
+// void	draw_single_line_of_wall_h(t_data *data, int j, float wall_dist);
+// void	draw_single_line_of_wall(t_data *data, float angle, int j);
+void	draw_3d_to_image(t_data *data);
+void	put_window_black(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:06:45 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/01 16:50:00 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 11:56:22 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ int	get_longest_line(char *map_line)
 	while (map_line[i] != '\0')
 	{
 		j = 0;
-		while (map_line[i] != '\n' && map_line[i] != '\0')
+		while (map_line[i] != '\0' && map_line[i] != '\n')
 		{
 			i++;
 			j++;
 		}
 		if (j > max)
 			max = j;
-		i++;
+		if (map_line[i] != '\0' && map_line[i] == '\n')
+			i++;
 	}
 	return (max);
 }

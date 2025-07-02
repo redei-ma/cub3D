@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:56:47 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/01 13:44:18 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 11:19:40 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	perform_dda_step(t_dda *dda)
 	}
 }
 
-float	cast_ray_dda_limited(t_data *data, float start_x, float start_y, float angle)
+float	cast_ray_dda(t_data *data, float start_x, float start_y, float angle)
 {
 	t_dda	dda;
 	int		hit;
@@ -103,11 +103,8 @@ float	cast_ray_dda_limited(t_data *data, float start_x, float start_y, float ang
 			distance = (dda.map_x - start_x + (1 - dda.step_x) / 2) / dda.ray_dir_x;
 		else
 			distance = (dda.map_y - start_y + (1 - dda.step_y) / 2) / dda.ray_dir_y;
-		
-		// Se supera il limite, ferma il raggio
-		if (distance >= MAX_VIEW_DISTANCE)
-			return (MAX_VIEW_DISTANCE);
 	}
+	data->last_dda = dda;
 	return (distance);
 }
 
@@ -139,21 +136,6 @@ int	check_player_collision(t_data *data, float x, float y)
 	return (1);
 }
 
-/* int	check_collision_dda(t_data *data, float start_x, float start_y, float target_x, float target_y)
-{
-	float	angle;
-	float	distance;
-	float	wall_distance;
-	float	margin;
-
-	angle = atan2(target_y - start_y, target_x - start_x);
-	distance = sqrt((target_x - start_x) * (target_x - start_x)
-			+ (target_y - start_y) * (target_y - start_y));
-	wall_distance = cast_ray_dda_limited(data, start_x, start_y, angle);
-	margin = 0.1f;
-	return (distance + margin < wall_distance);
-} */
-
 void	draw_single_ray(t_data *data, float angle, t_minimap mini)
 {
 	float	wall_dist;
@@ -162,13 +144,31 @@ void	draw_single_ray(t_data *data, float angle, t_minimap mini)
 	float	step_size;
 	int		i;
 
-	wall_dist = cast_ray_dda_limited(data, data->player->x, data->player->y, angle);
+	wall_dist = cast_ray_dda(data, data->player->x, data->player->y, angle);
 	step_size = 0.02f;
 	current_x = data->player->x;
 	current_y = data->player->y;
 	i = 0;
+	/* static int j;
+	int max_j = j + (WIN_WIDTH / 90);
+	while (j < max_j)
+	{
+		int line_height = (int)(WIN_HEIGHT / wall_dist);
+		int draw_start = -line_height / 2 + WIN_HEIGHT / 2;
+		int draw_end = line_height / 2 + WIN_HEIGHT / 2;
+
+		if (draw_start < 0) draw_start = 0;
+		if (draw_end >= WIN_HEIGHT) draw_end = WIN_HEIGHT - 1;
+
+		int color = 0xAAAAAA;
+
+		for (int y = draw_start; y < draw_end; y++)
+			put_pixel_to_image(data->game->img, j, y, color);
+		j++;
+	} */
 	while (i < (int)(wall_dist / step_size))
 	{
+		
 		put_pixel_to_image(data->game->img,
 			(int)(current_x * mini.tile_size_x),
 			(int)(current_y * mini.tile_size_y),

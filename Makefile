@@ -19,6 +19,7 @@ SRCS =	srcs/parsing/parsing.c\
 		srcs/dda.c \
 		srcs/init.c \
 		srcs/drawing.c \
+		srcs/drawing_3d.c \
 		srcs/movement.c \
 		srcs/events.c
 

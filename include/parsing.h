@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:58:00 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/01 16:50:46 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:15:19 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_basic_elements
 	char		*south_texture;
 	char		*west_texture;
 	char		*east_texture;
-	int			floor_colours[3];
-	int			ceiling_colours[3];
+	int			floor_colour;
+	int			ceiling_colour;
 	char		**map;
 }				t_basic_elements;
 
@@ -52,7 +52,7 @@ int		get_texture(t_basic_elements *str, char *new_line);
 //get_elements
 void	finish_get_next_line(char *new_line, int fd);
 int		get_texture(t_basic_elements *str, char *new_line);
-int		get_element(t_basic_elements *str, char *new_line, int fd);
+int		get_element(t_basic_elements *str, char *new_line);
 int		get_basic_elements(t_basic_elements *str, int fd);
 
 //free_vari

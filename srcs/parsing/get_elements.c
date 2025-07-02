@@ -3,29 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 23:37:56 by ale               #+#    #+#             */
-/*   Updated: 2025/06/30 20:39:47 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:23:31 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	get_element(t_basic_elements *str, char *new_line, int fd)
+int	get_element(t_basic_elements *str, char *new_line)
 {
-	(void) fd;
-	if (ft_strncmp(new_line, "NO", 2) == 0)
+	if (ft_strncmp(new_line, "NO", 2) == 0 && new_line[2] == ' ')
 		return (get_texture(str, new_line));
-	else if (ft_strncmp(new_line, "SO", 2) == 0)
+	else if (ft_strncmp(new_line, "SO", 2) == 0 && new_line[2] == ' ')
 		return (get_texture(str, new_line));
-	else if (ft_strncmp(new_line, "WE", 2) == 0)
+	else if (ft_strncmp(new_line, "WE", 2) == 0 && new_line[2] == ' ')
 		return (get_texture(str, new_line));
-	else if (ft_strncmp(new_line, "EA", 2) == 0)
+	else if (ft_strncmp(new_line, "EA", 2) == 0 && new_line[2] == ' ')
 		return (get_texture(str, new_line));
-	else if (new_line[0] == 'F')
+	else if (new_line[0] == 'F' && new_line[1] == ' ')
 		return (get_colors(str, new_line, new_line[0]));
-	else if (new_line[0] == 'C')
+	else if (new_line[0] == 'C' && new_line[1] == ' ')
 		return (get_colors(str, new_line, new_line[0]));
 	else
 	{
@@ -79,7 +78,7 @@ int	get_basic_elements(t_basic_elements *str, int fd)
 				return (error("incorrect syntax", 0), close(fd), 0);
 			skip_line = skip_empty_line_and_initial_spaces(&i, new_line);
 		}
-		if (!get_element(str, &new_line[i], fd))
+		if (!get_element(str, &new_line[i]))
 			return (finish_get_next_line(new_line, fd), 0);
 		elements_found++;
 	}
