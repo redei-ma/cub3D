@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:58:00 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/02 14:15:19 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:15:27 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 # include "../minilibx-linux/mlx.h"
 
 # define M_PI 3.14159265358979323846
+
+typedef struct s_texture
+{
+    void    *img;
+    char    *addr;
+    int     width;
+    int     height;
+    int     bits_per_pixel;
+    int     line_length;
+    int     endian;
+}   t_texture;
 
 typedef struct s_player
 {
@@ -25,9 +36,13 @@ typedef struct s_player
 typedef struct s_basic_elements
 {
 	char		*north_texture;
+	t_texture	north;
 	char		*south_texture;
+	t_texture	south;
 	char		*west_texture;
+	t_texture	west;
 	char		*east_texture;
+	t_texture	east;
 	int			floor_colour;
 	int			ceiling_colour;
 	char		**map;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:17:34 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/02 14:16:29 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:16:09 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char *argv[])
 	data.player = &player;
 	data.map = elements_struct.map;
 	data.elements = &elements_struct;
+	//inizializzare t_texture
 	data.mini = init_minimap(data.map);
 	draw_image(&data);
 
