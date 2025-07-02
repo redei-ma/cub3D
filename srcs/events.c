@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:16:20 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/01 16:59:42 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:23:22 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ int key_press(int keycode, t_data *data)
 
 int	close_window(t_data *data)
 {
-	mlx_destroy_window(data->game->mlx, data->game->win);
+	free_all_textures(data);
 	mlx_destroy_image(data->game->mlx, data->game->img.img);
+	mlx_destroy_window(data->game->mlx, data->game->win);
     mlx_destroy_display(data->game->mlx);
     free(data->game->mlx);
     free(data->game);

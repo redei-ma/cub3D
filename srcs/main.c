@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:17:34 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/02 15:16:09 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:24:33 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,21 @@ int	main(int argc, char *argv[])
 	t_player			player;
 
 	if (handle_parsing(argc, argv, &elements_struct, &player) == 0)
-		return (0);
+		return (1);
 	data.game = init_game();
 	if (!data.game)
 		return (1);
 	data.player = &player;
 	data.map = elements_struct.map;
 	data.elements = &elements_struct;
-	//inizializzare t_texture
+	
+	if (!init_all_texture_files(&data))
+	{
+		error("can't load textures", NULL);
+		close_window(&data);
+		return (1);
+	}
+	
 	data.mini = init_minimap(data.map);
 	draw_image(&data);
 

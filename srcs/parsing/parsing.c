@@ -6,7 +6,7 @@
 /*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:57:24 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/30 20:17:08 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:17:05 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ void	init_basic_elements(t_basic_elements *str)
 	str->south_texture = NULL;
 	str->west_texture = NULL;
 	str->east_texture = NULL;
+	str->north.img = NULL;
+	str->south.img = NULL;
+	str->west.img = NULL;
+	str->east.img = NULL;
 	str->map = NULL;
 }
 

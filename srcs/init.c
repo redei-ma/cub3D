@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:15:44 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/01 17:00:06 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:00:07 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ t_game	*init_game(void)
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	if (!game->win)
 	{
-		free(game->mlx);
+		free(game->mlx);//qua mi sa che va anche mlx_destroy_display
 		free(game);
 		return (NULL);
 	}
 	if (!init_image(game))
 	{
 		mlx_destroy_window(game->mlx, game->win);
-		free(game->mlx);
+		free(game->mlx);//anche qua mi sa che va anche mlx_destroy_display
 		free(game);
 		return (NULL);
 	}

@@ -109,6 +109,12 @@ void	draw_single_ray(t_data *data, float angle, t_minimap mini);
 // void	draw_single_line_of_wall_h(t_data *data, int j, float wall_dist);
 // void	draw_single_line_of_wall(t_data *data, float angle, int j);
 void	draw_3d_to_image(t_data *data);
-void	put_window_black(t_data *data);
+//void	put_window_black(t_data *data);
+
+// ========== LOAD_TEXTURES.C ==========
+
+void	free_all_textures(t_data *data);
+int		load_single_texture_file(t_data *data, t_texture *tex, char *path);
+int		init_all_texture_files(t_data *data);
 
 #endif

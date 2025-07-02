@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_texture.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:45:14 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/02 15:12:45 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:29:24 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,7 @@ void	put_texture(t_basic_elements *str, char *new_line, char *texture)
 		str->east_texture = texture;
 }
 
-int load_texture(t_data *data, char *path)
-{
-	t_texture	*text;
-
-    texture->img = mlx_xpm_file_to_image(data->game->mlx, path, 
-                                        &texture->width, &texture->height);
-    if (!texture->img)
-        return (0);
-    
-    texture->addr = mlx_get_data_addr(texture->img, 
-                                     &texture->bits_per_pixel,
-                                     &texture->line_length, 
-                                     &texture->endian);
-    return (1);
-}
-
-int	get_texture(t_data *data, char *new_line)
+int	get_texture(t_basic_elements *str, char *new_line)
 {
 	int		i;
 	int		len;
@@ -87,10 +71,9 @@ int	get_texture(t_data *data, char *new_line)
 	texture = malloc(sizeof(char) * (len - i + 1));
 	if (!texture)
 		return (error("malloc failed", NULL), 0);
-	load_texture(data, texture);
 	ft_strlcpy(texture, &new_line[i], len - i + 1);
 	if (check_texture_is_valid(texture) == 0)
 		return (0);
-	put_texture(data, new_line, texture);
+	put_texture(str, new_line, texture);
 	return (1);
 }
