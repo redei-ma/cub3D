@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:56:47 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/02 11:19:40 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:02:42 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	perform_dda_step(t_dda *dda)
 		dda->side = 1;
 	}
 }
-
+/* // old
 float	cast_ray_dda(t_data *data, float start_x, float start_y, float angle)
 {
 	t_dda	dda;
@@ -104,6 +104,33 @@ float	cast_ray_dda(t_data *data, float start_x, float start_y, float angle)
 		else
 			distance = (dda.map_y - start_y + (1 - dda.step_y) / 2) / dda.ray_dir_y;
 	}
+	data->last_dda = dda;
+	return (distance);
+} */
+
+float	cast_ray_dda(t_data *data, float start_x, float start_y, float angle)
+{
+	t_dda	dda;
+	int		hit;
+	float	distance;
+
+	init_dda_ray(&dda, start_x, start_y, angle);
+	calc_delta_dist(&dda);
+	calc_step_and_side_dist(&dda, start_x, start_y);
+	hit = 0;
+	while (!hit)
+	{
+		perform_dda_step(&dda);
+		hit = is_wall_hit(data, dda.map_x, dda.map_y);
+	}
+	// Calcola distanza perpendicolare per texture
+	if (dda.side == 0)
+		dda.perp_wall_dist = (dda.map_x - start_x + (1 - dda.step_x) / 2)
+			/ dda.ray_dir_x;
+	else
+		dda.perp_wall_dist = (dda.map_y - start_y + (1 - dda.step_y) / 2)
+			/ dda.ray_dir_y;
+	distance = dda.perp_wall_dist;
 	data->last_dda = dda;
 	return (distance);
 }
@@ -149,23 +176,6 @@ void	draw_single_ray(t_data *data, float angle, t_minimap mini)
 	current_x = data->player->x;
 	current_y = data->player->y;
 	i = 0;
-	/* static int j;
-	int max_j = j + (WIN_WIDTH / 90);
-	while (j < max_j)
-	{
-		int line_height = (int)(WIN_HEIGHT / wall_dist);
-		int draw_start = -line_height / 2 + WIN_HEIGHT / 2;
-		int draw_end = line_height / 2 + WIN_HEIGHT / 2;
-
-		if (draw_start < 0) draw_start = 0;
-		if (draw_end >= WIN_HEIGHT) draw_end = WIN_HEIGHT - 1;
-
-		int color = 0xAAAAAA;
-
-		for (int y = draw_start; y < draw_end; y++)
-			put_pixel_to_image(data->game->img, j, y, color);
-		j++;
-	} */
 	while (i < (int)(wall_dist / step_size))
 	{
 		

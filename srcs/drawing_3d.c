@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_3d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:13:01 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/02 14:23:51 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:50:04 by renato           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 /**
  * Ottiene il colore base per una specifica orientazione cardinale
  */
-static int	get_cardinal_color(int is_vertical, int positive_direction)
+//old pre textures
+/* static int	get_cardinal_color(int is_vertical, int positive_direction)
 {
 	if (is_vertical)
 	{
@@ -35,7 +36,7 @@ static int	get_cardinal_color(int is_vertical, int positive_direction)
 		else
 			return (0x4ECDC4);  // Ciano - Muro Sud (raggio va verso Nord)
 	}
-}
+} */
 
 /**
  * Calcola l'altezza della parete sullo schermo
@@ -65,6 +66,7 @@ static void	calculate_draw_limits(int wall_height, int *draw_start, int *draw_en
 /**
  * Calcola il colore del muro basato sui dati DDA precisi
  */
+/* // old pre textures
 static int	calculate_wall_color(t_data *data)
 {
 	int		is_vertical;
@@ -78,7 +80,7 @@ static int	calculate_wall_color(t_data *data)
 		positive_direction = (data->last_dda.ray_dir_y > 0);
 	base_color = get_cardinal_color(is_vertical, positive_direction);
 	return (base_color);
-}
+} */
 
 /**
  * Applica la correzione fish-eye
@@ -111,6 +113,7 @@ static void	draw_ceiling_column(t_data *data, int x, int ceiling_end)
  * Disegna la parete per una colonna
  * Dall'inizio alla fine della parete calcolata
  */
+/* // old pre textures
 static void	draw_wall_column(t_data *data, int x, int wall_start, int wall_end, int color)
 {
 	int	y;
@@ -121,7 +124,7 @@ static void	draw_wall_column(t_data *data, int x, int wall_start, int wall_end, 
 		put_pixel_to_image(data->game->img, x, y, color);
 		y++;
 	}
-}
+} */
 
 /**
  * Disegna il pavimento per una colonna  
@@ -145,7 +148,7 @@ static void	draw_floor_column(t_data *data, int x, int floor_start)
  * Renderizza una singola colonna verticale dello schermo
  * Questa è la funzione che trasforma la distanza in 3D!
  */
-static void	render_single_column(t_data *data, int x, float wall_distance)
+/* static void	render_single_column(t_data *data, int x, float wall_distance)
 {
 	int		wall_height;
 	int		draw_start;
@@ -165,6 +168,32 @@ static void	render_single_column(t_data *data, int x, float wall_distance)
 	draw_ceiling_column(data, x, draw_start);           // Sopra la parete
 	draw_wall_column(data, x, draw_start, draw_end, wall_color);  // La parete
 	draw_floor_column(data, x, draw_end);               // Sotto la parete
+} */
+
+// ========== MODIFICA AL RENDERING PRINCIPALE ==========
+
+/**
+ * Versione aggiornata della render_single_column con texture
+ */
+static void render_single_column_textured(t_data *data, int x, float wall_distance)
+{
+	int     wall_height;
+	int     draw_start;
+	int     draw_end;
+	int		draw_bounds[2];
+
+	// 1. Calcola altezza della parete sullo schermo
+	wall_height = calculate_wall_height(wall_distance);
+
+	// 2. Calcola dove disegnare la parete
+	calculate_draw_limits(wall_height, &draw_start, &draw_end);
+
+	// 3. Disegna i componenti
+	draw_ceiling_column(data, x, draw_start);
+	draw_bounds[0] = draw_start;
+	draw_bounds[1] = draw_end;
+	draw_textured_wall_column(data, x, draw_bounds, wall_height);  // <- TEXTURE!
+	draw_floor_column(data, x, draw_end);
 }
 
 /**
@@ -204,7 +233,7 @@ void	draw_3d_to_image(t_data *data)
 		corrected_distance = apply_fisheye_correction(wall_distance, 
 			ray_angle, data->player->angle);
 		// 4. Renderizza questa colonna
-		render_single_column(data, x, corrected_distance);
+		render_single_column_textured(data, x, corrected_distance);
 		x++;
 	}
 }

@@ -4,8 +4,8 @@
 # include <math.h>
 # include "parsing.h"
 
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 768
+# define WIN_WIDTH 2048
+# define WIN_HEIGHT 1024
 
 #define PLAYER_SIZE_RATIO 3
 
@@ -13,7 +13,7 @@
 # define R_SPEED 0.02f
 
 # define FOV_ANGLE (M_PI / 3) // 60 degrees
-# define FOV_RAYS 500 // Number of rays in the field of view
+# define FOV_RAYS 180 // Number of rays in the field of view
 
 enum opcode
 {
@@ -35,6 +35,7 @@ typedef struct s_dda
 	float	delta_dist_y;
 	float	side_dist_x;
 	float	side_dist_y;
+	float	perp_wall_dist;
 	int		step_x;
 	int		step_y;
 	int		side;
@@ -116,5 +117,8 @@ void	draw_3d_to_image(t_data *data);
 void	free_all_textures(t_data *data);
 int		load_single_texture_file(t_data *data, t_texture *tex, char *path);
 int		init_all_texture_files(t_data *data);
+
+void	draw_textured_wall_column(t_data *data, int x, int wall_bounds[2],
+	int wall_height);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:15:44 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/02 16:00:07 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:58:56 by renato           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,6 @@ t_minimap	init_minimap(char **map)
 	mini.tile_size_x = mini.minimap_width / mini.map_width;
 	mini.tile_size_y = mini.minimap_height / mini.map_height;
 	return (mini);
-}
-
-t_player	*set_player(void)
-{
-	t_player	*player;
-
-	player = ft_calloc(1, sizeof(t_player));
-	if (!player)
-		return (NULL);
-	player->x = 1.5;
-	player->y = 1.5;
-	player->angle = M_PI;
-	return (player);
 }
 
 static int	init_image(t_game *game)

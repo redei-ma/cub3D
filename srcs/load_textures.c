@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:43:41 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/02 16:21:55 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/04 11:04:14 by renato           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ int	load_single_texture_file(t_data *data, t_texture *tex, char *path)
 		return (0);
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bits_per_pixel,
 			&tex->line_length, &tex->endian);
+	if (!tex->addr)
+	{
+		mlx_destroy_image(data->game->mlx, tex->img);
+		tex->img = NULL;
+		return (0);
+	}
 	return (1);
 }
 

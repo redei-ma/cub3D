@@ -22,7 +22,8 @@ SRCS =	srcs/parsing/parsing.c\
 		srcs/drawing_3d.c \
 		srcs/movement.c \
 		srcs/events.c \
-		srcs/load_textures.c
+		srcs/load_textures.c \
+		srcs/render_textures.c
 
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
