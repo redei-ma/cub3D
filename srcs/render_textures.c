@@ -3,71 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render_textures.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:43:18 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/04 10:49:57 by renato           ###   ########.fr       */
+/*   Updated: 2025/07/07 14:08:25 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-
-// ========== CALCOLO COORDINATE TEXTURE ==========
-
-/**
- * Calcola quale texture usare basandosi sulla direzione del muro
- */
-t_texture   *get_texture_index(t_data *data)
-{
-	if (data->last_dda.side == 1)  // Muro verticale
-	{
-		if (data->last_dda.ray_dir_y > 0)
-			return (&data->elements->north);  // North texture
-		else
-			return (&data->elements->south);  // South texture
-	}
-	else  // Muro orizzontale
-	{
-		if (data->last_dda.ray_dir_x > 0)
-			return (&data->elements->west);  // West texture
-		else
-			return (&data->elements->east);  // East texture
-	}
-}
-
-/**
- * Calcola la coordinata X sulla texture (0.0 - 1.0)
- */
-static float    calculate_wall_x(t_data *data)
-{
-	float wall_x;
-	
-	if (data->last_dda.side == 0)  // Muro verticale
-		wall_x = data->player->y + data->last_dda.perp_wall_dist * data->last_dda.ray_dir_y;
-	else  // Muro orizzontale
-		wall_x = data->player->x + data->last_dda.perp_wall_dist * data->last_dda.ray_dir_x;
-	
-	wall_x -= floor(wall_x);  // Mantieni solo la parte decimale
-	return (wall_x);
-}
-
-/**
- * Ottiene il colore di un pixel dalla texture
- */
-static int  get_texture_color(t_texture *texture, int tex_x, int tex_y)
-{
-	char    *pixel;
-	
-	if (tex_x < 0 || tex_x >= texture->width || 
-		tex_y < 0 || tex_y >= texture->height)
-		return (0);
-	
-	pixel = texture->addr + (tex_y * texture->line_length + 
-							tex_x * (texture->bits_per_pixel / 8));
-	return (*(int*)pixel);
-}
-
 
 /**
  * Calcola la coordinata X sulla texture in pixel
@@ -75,7 +18,7 @@ static int  get_texture_color(t_texture *texture, int tex_x, int tex_y)
 static int	calculate_texture_x(t_data *data, t_texture *texture)
 {
 	float	wall_x;
-	
+
 	wall_x = calculate_wall_x(data);
 	return ((int)(wall_x * texture->width));
 }

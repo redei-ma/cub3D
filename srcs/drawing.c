@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:13:26 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/02 13:26:12 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/07 12:11:46 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,36 @@ void	put_pixel_to_image(t_image img, int x, int y, int color)
 	if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
 	{
 		dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
-		*(unsigned int*)dst = color;
+		*(unsigned int *)dst = color;
 	}
 }
 
-void	draw_fov_to_image(t_data *data)
+static void	draw_single_ray(t_data *data, float angle, t_minimap mini)
+{
+	float	wall_dist;
+	float	current_x;
+	float	current_y;
+	float	step_size;
+	int		i;
+
+	wall_dist = cast_ray_dda(data, data->player->x, data->player->y, angle);
+	step_size = 0.02f;
+	current_x = data->player->x;
+	current_y = data->player->y;
+	i = 0;
+	while (i < (int)(wall_dist / step_size))
+	{
+		put_pixel_to_image(data->game->img,
+			(int)(current_x * mini.tile_size_x),
+			(int)(current_y * mini.tile_size_y),
+			0xFF0000);
+		current_x += cos(angle) * step_size;
+		current_y += sin(angle) * step_size;
+		i++;
+	}
+}
+
+static void	draw_fov_to_image(t_data *data)
 {
 	float			start_angle;
 	float			angle_step;
@@ -39,7 +64,8 @@ void	draw_fov_to_image(t_data *data)
 	}
 }
 
-static void	draw_player_to_image(t_data *data, int center_x, int center_y, int color)
+static void	draw_player_to_image(t_data *data, int center_x,
+		int center_y, int color)
 {
 	int				radius;
 	int				i;
@@ -53,61 +79,21 @@ static void	draw_player_to_image(t_data *data, int center_x, int center_y, int c
 		while (i <= radius)
 		{
 			if (i * i + j * j <= radius * radius)
-				put_pixel_to_image(data->game->img, center_x + i, center_y + j, color);
+				put_pixel_to_image(data->game->img, center_x + i,
+					center_y + j, color);
 			i++;
 		}
 		j++;
 	}
-}
-
-static void	draw_tile_to_image(t_data *data, int start_x, int start_y, int color)
-{
-	int				i;
-	int				j;
-
-	j = 0;
-	while (j < data->mini.tile_size_y)
-	{
-		i = 0;
-		while (i < data->mini.tile_size_x)
-		{
-			put_pixel_to_image(data->game->img, start_x + i, start_y + j, color);
-			i++;
-		}
-		j++;
-	}
-}
-
-static void	draw_minimap_to_image(t_data *data)
-{
-	int				x;
-	int				y;
-
-	y = 0;
-	while (y < data->mini.map_height)
-	{
-		x = 0;
-		while (x < data->mini.map_width)
-		{
-			if (data->map[y][x] == '1')
-				draw_tile_to_image(data, x * data->mini.tile_size_x, y * data->mini.tile_size_y, 0xFFFFFF);
-			else if (data->map[y][x] == ' ')
-				;
-			else
-				draw_tile_to_image(data, x * data->mini.tile_size_x, y * data->mini.tile_size_y, 0xC0C0C0);
-			x++;
-		}
-		y++;
-	}
-	draw_player_to_image(data, data->player->x * data->mini.tile_size_x, data->player->y * data->mini.tile_size_y, 0x00FF00);
-	// vorrei spostarlo in draw_image
 }
 
 void	draw_image(t_data *data)
 {
-	//put_window_black(data); //serve?
 	draw_3d_to_image(data);
 	draw_minimap_to_image(data);
+	draw_player_to_image(data, data->player->x * data->mini.tile_size_x,
+		data->player->y * data->mini.tile_size_y, 0x00FF00);
 	draw_fov_to_image(data);
-	mlx_put_image_to_window(data->game->mlx, data->game->win, data->game->img.img, 0, 0);
+	mlx_put_image_to_window(data->game->mlx, data->game->win,
+		data->game->img.img, 0, 0);
 }

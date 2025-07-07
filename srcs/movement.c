@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:08:40 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/01 13:42:30 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/07 11:25:41 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,4 @@ void	rotate_player(t_data *data, int direction)
 		if (data->player->angle >= 2 * M_PI)
 			data->player->angle -= 2 * M_PI;
 	}
-	// draw_image(data);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: renato <renato@student.42.fr>              +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:15:44 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/04 10:58:56 by renato           ###   ########.fr       */
+/*   Updated: 2025/07/07 12:15:18 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	init_image(t_game *game)
 	if (!game->img.img)
 		return (0);
 	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel,
-		&game->img.line_length, &game->img.endian);
+			&game->img.line_length, &game->img.endian);
 	return (1);
 }
 
@@ -44,21 +44,18 @@ t_game	*init_game(void)
 		return (NULL);
 	game->mlx = mlx_init();
 	if (!game->mlx)
-	{
-		free(game);
-		return (NULL);
-	}
+		return (free(game), NULL);
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	if (!game->win)
 	{
-		free(game->mlx);//qua mi sa che va anche mlx_destroy_display
+		free(game->mlx);
 		free(game);
 		return (NULL);
 	}
 	if (!init_image(game))
 	{
 		mlx_destroy_window(game->mlx, game->win);
-		free(game->mlx);//anche qua mi sa che va anche mlx_destroy_display
+		free(game->mlx);
 		free(game);
 		return (NULL);
 	}

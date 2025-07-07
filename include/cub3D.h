@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/07 11:35:01 by redei-ma          #+#    #+#             */
+/*   Updated: 2025/07/07 14:10:51 by redei-ma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
 # include <math.h>
 # include "parsing.h"
 
-# define WIN_WIDTH 2048
-# define WIN_HEIGHT 1024
+# define WIN_WIDTH 1248
+# define WIN_HEIGHT 800
 
-#define PLAYER_SIZE_RATIO 3
+# define PLAYER_SIZE_RATIO 3
 
-# define SPEED 0.035f
+# define SPEED 0.03f
 # define R_SPEED 0.02f
 
-# define FOV_ANGLE (M_PI / 3) // 60 degrees
+# define FOV_ANGLE 1.04719755119659774615 // (M_PI/3) 60 degrees
 # define FOV_RAYS 180 // Number of rays in the field of view
 
-enum opcode
+enum e_opcode
 {
 	FORWARD,
 	BACKWARD,
@@ -41,7 +53,7 @@ typedef struct s_dda
 	int		side;
 }	t_dda;
 
-typedef struct	s_image
+typedef struct s_image
 {
 	void	*img;
 	char	*addr;
@@ -50,7 +62,7 @@ typedef struct	s_image
 	int		endian;
 }	t_image;
 
-typedef struct	s_minimap
+typedef struct s_minimap
 {
 	int		map_width;
 	int		map_height;
@@ -60,12 +72,13 @@ typedef struct	s_minimap
 	float	tile_size_y;
 }	t_minimap;
 
-typedef struct	s_game
+typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
 	t_image	img;
 	int		keys_pressed[6];
+	double	mouse_accumulator;
 }	t_game;
 
 typedef struct s_data
@@ -78,47 +91,64 @@ typedef struct s_data
 	t_dda				last_dda;
 }	t_data;
 
+/* ===== MAIN ===== */
+int			close_window(t_data *data);
 
-// ========== INIT.C ==========
+/* ===== INIT ===== */
 t_minimap	init_minimap(char **map);
-t_player	*set_player(void);
 t_game		*init_game(void);
 
-// ========== DRAWING.C ==========
-void		put_pixel_to_image(t_image img, int x, int y, int color);
-void		draw_fov_to_image(t_data *data);
-void		draw_image(t_data *data);
+/* ===== EVENTS ===== */
+int			game_loop(t_data *data);
+int			key_release(int keycode, t_data *data);
+int			key_press(int keycode, t_data *data);
 
-// ========== MOVEMENT.C ==========
+/* ===== MOUSE EVENTS ===== */
+void		rotate_player_mouse(t_data *data, int delta_x);
+int			mouse_hook(int x, int y, t_data *data);
+
+/* ===== DDA ===== */
+float		cast_ray_dda(t_data *data, float start_x, float start_y,
+				float angle);
+
+/* ===== COLLISION ===== */
+int			is_wall_hit(t_data *data, int map_x, int map_y);
+int			check_player_collision(t_data *data, float x, float y);
+
+/* ===== MOVEMENT ===== */
 void		move_player(t_data *data, t_player *player, int direction);
 void		rotate_player(t_data *data, int direction);
 
-// ========== EVENTS.C ==========
-int			key_release(int keycode, t_data *data);
-int			key_press(int keycode, t_data *data);
-int 		game_loop(t_data *data);
-int			close_window(t_data *data);
+/* ===== TEXTURES ===== */
+void		free_all_textures(t_data *data);
+int			load_single_texture_file(t_data *data, t_texture *tex, char *path);
+int			init_all_texture_files(t_data *data);
 
-// ========== DDA.C ==========
+/* ===== TEXTURE UTILS ===== */
+float		calculate_wall_x(t_data *data);
+int			get_texture_color(t_texture *texture, int tex_x, int tex_y);
+t_texture	*get_texture_index(t_data *data);
 
-float	cast_ray_dda(t_data *data, float start_x, float start_y, float angle);
-int		check_player_collision(t_data *data, float x, float y);
-void	draw_single_ray(t_data *data, float angle, t_minimap mini);
+/* ===== RENDER TEXTURES ===== */
+void		draw_textured_wall_column(t_data *data, int x, int wall_bounds[2],
+				int wall_height);
 
-// ========== DRAWING_3D.C ==========
+/* ===== 3D UTILS ===== */
+int			calculate_wall_height(float wall_distance);
+void		calculate_draw_limits(int wall_height, int *draw_start,
+				int *draw_end);
+float		apply_fisheye_correction(float wall_distance,
+				float ray_angle, float player_angle);
+float		calculate_ray_angle(t_data *data, int column_x);
 
-// void	draw_single_line_of_wall_h(t_data *data, int j, float wall_dist);
-// void	draw_single_line_of_wall(t_data *data, float angle, int j);
-void	draw_3d_to_image(t_data *data);
-//void	put_window_black(t_data *data);
+/* ===== 3D DRAWING ===== */
+void		draw_3d_to_image(t_data *data);
 
-// ========== LOAD_TEXTURES.C ==========
+/* ===== MINIMAP ===== */
+void		draw_minimap_to_image(t_data *data);
 
-void	free_all_textures(t_data *data);
-int		load_single_texture_file(t_data *data, t_texture *tex, char *path);
-int		init_all_texture_files(t_data *data);
-
-void	draw_textured_wall_column(t_data *data, int x, int wall_bounds[2],
-	int wall_height);
+/* ===== DRAWING ===== */
+void		put_pixel_to_image(t_image img, int x, int y, int color);
+void		draw_image(t_data *data);
 
 #endif
