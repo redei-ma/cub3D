@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:15:44 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 15:01:15 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:44:28 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	set_data(t_data *data, t_player *player, t_basic_elements *elements)
+{
+	data->player = player;
+	data->player->x += 0.5;
+	data->player->y += 0.5;
+	data->map = elements->map;
+	data->elements = elements;
+	data->mini = init_minimap(data->map);
+}
 
 t_minimap	init_minimap(char **map)
 {

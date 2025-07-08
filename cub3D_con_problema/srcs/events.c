@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:16:20 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 17:58:04 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:47:09 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+int	animate(t_data *data)
+{
+	data->game->animation_frame++;
+	if (data->game->animation_frame >= 10)
+	{
+		if (data->elements->north_curr.img == data->elements->north1.img)
+			data->elements->north_curr = data->elements->north2;
+		else
+			data->elements->north_curr = data->elements->north1;
+		data->game->animation_frame = 0;
+	}
+	return (0);
+}
 
 static void	update_movement(t_data *data)
 {

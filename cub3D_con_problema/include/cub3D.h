@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:35:01 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 15:18:57 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:45:17 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define WIN_WIDTH 1248
 # define WIN_HEIGHT 800
 
-# define PLAYER_SIZE_RATIO 3
+# define PLAYER_SIZE_RATIO 2
 
 # define SPEED 0.03f
 # define R_SPEED 0.02f
@@ -96,6 +96,8 @@ typedef struct s_data
 int			close_window(t_data *data);
 
 /* ===== INIT ===== */
+void		set_data(t_data *data, t_player *player,
+				t_basic_elements *elements);
 t_minimap	init_minimap(char **map);
 t_game		*init_game(void);
 
