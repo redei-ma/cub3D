@@ -28,7 +28,8 @@ SRCS =	srcs/main.c \
 		srcs/drawing_3d_utils.c \
 		srcs/drawing_3d.c \
 		srcs/drawing_minimap.c \
-		srcs/drawing.c
+		srcs/drawing.c \
+		srcs/doors.c
 
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a

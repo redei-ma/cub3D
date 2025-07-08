@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:35:01 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/08 09:45:17 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:41:46 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 # include <math.h>
 # include "parsing.h"
 
-# define WIN_WIDTH 1248
-# define WIN_HEIGHT 800
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 994
 
-# define PLAYER_SIZE_RATIO 2
+# define PLAYER_SIZE_RATIO 3
 
 # define SPEED 0.03f
 # define R_SPEED 0.02f
 
 # define FOV_ANGLE 1.04719755119659774615 // (M_PI/3) 60 degrees
-# define FOV_RAYS 180 // Number of rays in the field of view
+
+# define DOOR_CLOSED 'D'
 
 enum e_opcode
 {
@@ -102,6 +103,7 @@ t_minimap	init_minimap(char **map);
 t_game		*init_game(void);
 
 /* ===== EVENTS ===== */
+int			animate(t_data *data);
 int			game_loop(t_data *data);
 int			key_release(int keycode, t_data *data);
 int			key_press(int keycode, t_data *data);
@@ -154,6 +156,7 @@ void		draw_minimap_to_image(t_data *data);
 void		put_pixel_to_image(t_image img, int x, int y, int color);
 void		draw_image(t_data *data);
 
-int			animate(t_data *data);
+/* ===== DRAWING ===== */
+void		interact_with_door(t_data *data);
 
 #endif

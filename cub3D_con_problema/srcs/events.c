@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:16:20 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/08 09:47:09 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:32:47 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	key_press(int keycode, t_data *data)
 {
 	if (keycode == 65307)
 		close_window(data);
+	else if (keycode == 'e' || keycode == 101)
+		interact_with_door(data);
 	else if (keycode == 'w' || keycode == 119)
 		data->game->keys_pressed[0] = 1;
 	else if (keycode == 's' || keycode == 115)

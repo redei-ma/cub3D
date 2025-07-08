@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:43:41 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/07 17:40:37 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:17:02 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	free_all_textures(t_data *data)
 		mlx_destroy_image(data->game->mlx, data->elements->west.img);
 	if (data->elements->east.img)
 		mlx_destroy_image(data->game->mlx, data->elements->east.img);
+	if (data->elements->door.img)
+		mlx_destroy_image(data->game->mlx, data->elements->door.img);
 }
 
 int	load_single_texture_file(t_data *data, t_texture *tex, char *path)
@@ -59,6 +61,9 @@ int	init_all_texture_files(t_data *data)
 		return (0);
 	if (!load_single_texture_file(data, &data->elements->east,
 			data->elements->east_texture))
+		return (0);
+	if (!load_single_texture_file(data, &data->elements->door,
+			"./images/door.xpm"))
 		return (0);
 	data->elements->north_curr = data->elements->north1;
 	return (1);

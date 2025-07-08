@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:01:34 by ale               #+#    #+#             */
-/*   Updated: 2025/07/01 16:49:24 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:22:35 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	validate_map(char *map_line, t_player *start)
 	map_size[0] = get_longest_line(map_line) - 1;
 	map_size[1] = ft_countlines((const char **) map2) - 1;
 	free(map_line);
-	if (fill (map2, map_size, *start, "NSWE0") == -1)
+	if (fill (map2, map_size, *start, "NSWE0D") == -1)
 	{
 		free_map(map2);
 		error("invalid map", NULL);

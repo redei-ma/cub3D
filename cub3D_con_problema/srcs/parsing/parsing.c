@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:57:24 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/07 14:58:01 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:45:38 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	init_basic_elements(t_basic_elements *str)
 	str->south.img = NULL;
 	str->west.img = NULL;
 	str->east.img = NULL;
+	str->door.img = NULL;
 	str->map = NULL;
 }
 

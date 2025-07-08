@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:58:00 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/07 14:53:54 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:56:22 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_basic_elements
 	t_texture	east;
 	int			floor_colour;
 	int			ceiling_colour;
+	t_texture	door;
 	char		**map;
 }				t_basic_elements;
 

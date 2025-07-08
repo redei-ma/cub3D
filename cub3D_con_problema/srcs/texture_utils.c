@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:52:56 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 14:55:08 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:26:06 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	get_texture_color(t_texture *texture, int tex_x, int tex_y)
  */
 t_texture	*get_texture_index(t_data *data)
 {
+	const int	map_x = data->last_dda.map_x;
+	const int	map_y = data->last_dda.map_y;
+
+	if (data->map[map_y][map_x] == DOOR_CLOSED)
+		return (&data->elements->door);
 	if (data->last_dda.side == 1)
 	{
 		if (data->last_dda.ray_dir_y > 0)
