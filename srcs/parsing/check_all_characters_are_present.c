@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_all_characters_are_present.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:10:14 by ale               #+#    #+#             */
-/*   Updated: 2025/06/30 19:22:17 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:25:09 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	check_all_characters_are_present(char *map_line)
 	{
 		if (map_line[i] == '1')
 			characters_arr[0] = 1;
-		else if (map_line[i] == '0')
-			characters_arr[1] = 1;
+		else if (map_line[i] == '0' || map_line[i] == ' ' || map_line[i] == 'D')
+			;
 		else if (map_line[i] == 'N')
 			characters_arr[2]++;
 		else if (map_line[i] == 'S')
@@ -57,8 +57,6 @@ int	check_all_characters_are_present(char *map_line)
 			characters_arr[2]++;
 		else if (map_line[i] == 'W')
 			characters_arr[2]++;
-		else if (map_line[i] == ' ')
-			;
 		else if (map_line[i] != '\n')
 			return (error("wrong character in map", map_line), 0);
 		i++;

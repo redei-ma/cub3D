@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:47:34 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 12:33:20 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/09 09:52:36 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	mouse_hook(int x, int y, t_data *data)
 	int			delta_x;
 
 	(void)y;
+	if (!data->game->mouse_enabled)
+		return (0);
 	delta_x = x - center_x;
 	if (abs(delta_x) > 1)
 	{

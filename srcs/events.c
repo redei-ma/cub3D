@@ -6,11 +6,25 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:16:20 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 11:45:22 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:00:54 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static int	animate(t_data *data)
+{
+	data->game->animation_frame++;
+	if (data->game->animation_frame >= 10)
+	{
+		if (data->elements->north_curr.img == data->elements->north1.img)
+			data->elements->north_curr = data->elements->north2;
+		else
+			data->elements->north_curr = data->elements->north1;
+		data->game->animation_frame = 0;
+	}
+	return (0);
+}
 
 static void	update_movement(t_data *data)
 {
@@ -30,6 +44,7 @@ static void	update_movement(t_data *data)
 
 int	game_loop(t_data *data)
 {
+	animate(data);
 	update_movement(data);
 	draw_image(data);
 	return (0);
@@ -56,6 +71,15 @@ int	key_press(int keycode, t_data *data)
 {
 	if (keycode == 65307)
 		close_window(data);
+	else if (keycode == ' ' || keycode == 32)
+		interact_with_door(data);
+	else if (keycode == 'm' || keycode == 109)
+	{
+		data->game->mouse_enabled = !data->game->mouse_enabled;
+		if (data->game->mouse_enabled)
+			mlx_mouse_move(data->game->mlx, data->game->win,
+				WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	}
 	else if (keycode == 'w' || keycode == 119)
 		data->game->keys_pressed[0] = 1;
 	else if (keycode == 's' || keycode == 115)

@@ -6,7 +6,7 @@
 /*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:46:30 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/02 14:16:50 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:50:13 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	skip_initial_spaces_and_initial_checks(char **new_line, int *i)
 
 int	convert_color(int r, int g, int b)
 {
-	int c;
+	int	c;
 
 	c = r;
 	c = (c << 8) | g;
@@ -66,7 +66,7 @@ int	get_colors(t_basic_elements *str, char *new_line, char first_letter)
 {
 	int	i;
 	int	j;
-	int color[3];
+	int	color[3];
 
 	i = 1;
 	j = -1;

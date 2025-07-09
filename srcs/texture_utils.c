@@ -6,15 +6,15 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:52:56 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 14:06:20 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:32:23 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/*
- * Calcola la coordinata X sulla texture (0.0 - 1.0)
- */
+// Calculates the exact X coordinate on the wall where the ray hit (0.0 - 1.0)
+// Uses ray direction and distance to find the fractional position within
+// the wall
 float	calculate_wall_x(t_data *data)
 {
 	float	wall_x;
@@ -29,9 +29,7 @@ float	calculate_wall_x(t_data *data)
 	return (wall_x);
 }
 
-/*
- * Ottiene il colore di un pixel dalla texture
- */
+// Retrieves the color of a specific pixel from the texture with bounds checking
 int	get_texture_color(t_texture *texture, int tex_x, int tex_y)
 {
 	char	*pixel;
@@ -44,15 +42,19 @@ int	get_texture_color(t_texture *texture, int tex_x, int tex_y)
 	return (*(int *)pixel);
 }
 
-/*
- * Calcola quale texture usare basandosi sulla direzione del muro
- */
+// Determines which texture to use based on wall type and ray direction
+// Returns appropriate texture for doors or cardinal directions (N/S/E/W)
 t_texture	*get_texture_index(t_data *data)
 {
+	const int	map_x = data->last_dda.map_x;
+	const int	map_y = data->last_dda.map_y;
+
+	if (data->map[map_y][map_x] == DOOR_CLOSED)
+		return (&data->elements->door);
 	if (data->last_dda.side == 1)
 	{
 		if (data->last_dda.ray_dir_y > 0)
-			return (&data->elements->north);
+			return (&data->elements->north_curr);
 		else
 			return (&data->elements->south);
 	}

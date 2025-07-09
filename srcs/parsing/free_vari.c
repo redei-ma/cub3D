@@ -6,7 +6,7 @@
 /*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 15:58:59 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/02 16:20:54 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:09:20 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	free_map(char **map)
 
 void	free_basic_elements(t_basic_elements *str)
 {
-	if (str->north_texture != NULL)
+	if (str->north_texture1 != NULL)
 	{
-		free(str->north_texture);
-		str->north_texture = NULL;
+		free(str->north_texture1);
+		str->north_texture1 = NULL;
 	}
 	if (str->south_texture != NULL)
 	{

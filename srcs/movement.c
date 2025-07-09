@@ -6,13 +6,13 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:08:40 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 11:25:41 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:15:39 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-// Applica movimento se possibile
+// Applies movement if collision check passes, with wall sliding
 static void	apply_safe_movement(t_data *data, float delta_x, float delta_y)
 {
 	float	new_x;
@@ -31,7 +31,8 @@ static void	apply_safe_movement(t_data *data, float delta_x, float delta_y)
 		data->player->y = new_y;
 }
 
-// Calcola nuova posizione Y
+// Calculates Y movement component based on player angle and direction
+// Uses sine for Y-axis movement in the coordinate system
 static float	calc_movement_y(t_player *player, int direction)
 {
 	if (direction == FORWARD)
@@ -45,7 +46,8 @@ static float	calc_movement_y(t_player *player, int direction)
 	return (0);
 }
 
-// Calcola nuova posizione X
+// Calculates X movement component based on player angle and direction
+// Uses cosine for X-axis movement in the coordinate system
 static float	calc_movement_x(t_player *player, int direction)
 {
 	if (direction == FORWARD)
@@ -59,7 +61,7 @@ static float	calc_movement_x(t_player *player, int direction)
 	return (0);
 }
 
-// Movimento principale del giocatore
+// Handles player movement with collision detection in specified direction
 void	move_player(t_data *data, t_player *player, int direction)
 {
 	float	delta_x;
@@ -70,7 +72,7 @@ void	move_player(t_data *data, t_player *player, int direction)
 	apply_safe_movement(data, delta_x, delta_y);
 }
 
-// Rotazione del giocatore
+// Rotates player left or right and handles angle wrapping
 void	rotate_player(t_data *data, int direction)
 {
 	if (direction == ROTATE_LEFT)

@@ -6,25 +6,20 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:55:11 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 12:01:34 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:17:25 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/**
- * Calcola l'altezza della parete sullo schermo
- * Formula: altezza = WIN_HEIGHT / distanza
- */
+// Calculates wall height on screen inversely proportional to distance
+// Closer walls appear taller, distant walls appear shorter
 int	calculate_wall_height(float wall_distance)
 {
 	return ((int)(WIN_HEIGHT / wall_distance));
 }
 
-/**
- * Calcola i punti di inizio e fine per disegnare la parete
- * Centra la parete verticalmente sullo schermo
- */
+// Calculates start and end points for drawing the wall vertically centered
 void	calculate_draw_limits(int wall_height, int *draw_start,
 		int *draw_end)
 {
@@ -36,20 +31,16 @@ void	calculate_draw_limits(int wall_height, int *draw_start,
 		*draw_end = WIN_HEIGHT - 1;
 }
 
-/**
- * Applica la correzione fish-eye
- * Senza questa correzione, i muri ai lati sembrano curvati
- */
+// Applies fisheye correction to prevent curved wall distortion at screen edges
+// Multiplies distance by cosine of angle difference to correct perspective
 float	apply_fisheye_correction(float wall_distance,
 		float ray_angle, float player_angle)
 {
 	return (wall_distance * cos(ray_angle - player_angle));
 }
 
-/**
- * Calcola l'angolo per una specifica colonna X
- * Distribuisce il FOV su tutta la larghezza dello schermo
- */
+// Calculates ray angle for a specific screen column within the field of view
+// Distributes the FOV evenly across all screen columns
 float	calculate_ray_angle(t_data *data, int column_x)
 {
 	float	angle_step;

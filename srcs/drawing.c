@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:13:26 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 12:11:46 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:26:31 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+#define FOV_RAY 500
 
 void	put_pixel_to_image(t_image img, int x, int y, int color)
 {
@@ -20,6 +22,31 @@ void	put_pixel_to_image(t_image img, int x, int y, int color)
 	{
 		dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
+	}
+}
+
+static void	draw_player_to_image(t_data *data, int center_x,
+		int center_y, int color)
+{
+	float	world_radius;
+	int		radius;
+	int		i;
+	int		j;
+
+	world_radius = 1.0f / PLAYER_SIZE_RATIO;
+	radius = (int)(world_radius * data->mini.tile_size_x);
+	j = -radius;
+	while (j <= radius)
+	{
+		i = -radius;
+		while (i <= radius)
+		{
+			if (i * i + j * j <= radius * radius)
+				put_pixel_to_image(data->game->img, center_x + i,
+					center_y + j, color);
+			i++;
+		}
+		j++;
 	}
 }
 
@@ -54,36 +81,13 @@ static void	draw_fov_to_image(t_data *data)
 	float			angle_step;
 	int				i;
 
-	angle_step = FOV_ANGLE / FOV_RAYS;
+	angle_step = FOV_ANGLE / FOV_RAY;
 	start_angle = data->player->angle - FOV_ANGLE / 2;
 	i = 0;
-	while (i < FOV_RAYS)
+	while (i < FOV_RAY)
 	{
 		draw_single_ray(data, start_angle + i * angle_step, data->mini);
 		i++;
-	}
-}
-
-static void	draw_player_to_image(t_data *data, int center_x,
-		int center_y, int color)
-{
-	int				radius;
-	int				i;
-	int				j;
-
-	radius = data->mini.tile_size_x / PLAYER_SIZE_RATIO;
-	j = -radius;
-	while (j <= radius)
-	{
-		i = -radius;
-		while (i <= radius)
-		{
-			if (i * i + j * j <= radius * radius)
-				put_pixel_to_image(data->game->img, center_x + i,
-					center_y + j, color);
-			i++;
-		}
-		j++;
 	}
 }
 

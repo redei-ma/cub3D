@@ -6,7 +6,7 @@
 /*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:45:14 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/02 16:29:24 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:10:07 by ade-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_texture_is_valid(char *texture)
 void	put_texture(t_basic_elements *str, char *new_line, char *texture)
 {
 	if (new_line[0] == 'N')
-		str->north_texture = texture;
+		str->north_texture1 = texture;
 	if (new_line[0] == 'S')
 		str->south_texture = texture;
 	if (new_line[0] == 'W')
@@ -58,7 +58,7 @@ int	get_texture(t_basic_elements *str, char *new_line)
 	int		i;
 	int		len;
 	char	*texture;
-	
+
 	i = 2;
 	if (skip_initial_spaces_for_texture(new_line, &i) == 0)
 		return (0);

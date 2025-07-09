@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
+/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:57:24 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/02 16:17:05 by ade-ross         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:45:38 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,18 @@ int	check_cub(char *s)
 
 void	init_basic_elements(t_basic_elements *str)
 {
-	str->north_texture = NULL;
+	str->north_texture1 = NULL;
+	str->north_texture2 = NULL;
 	str->south_texture = NULL;
 	str->west_texture = NULL;
 	str->east_texture = NULL;
-	str->north.img = NULL;
+	str->north1.img = NULL;
+	str->north2.img = NULL;
+	str->north_curr.img = NULL;
 	str->south.img = NULL;
 	str->west.img = NULL;
 	str->east.img = NULL;
+	str->door.img = NULL;
 	str->map = NULL;
 }
 

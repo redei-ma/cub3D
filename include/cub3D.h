@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:35:01 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 14:10:51 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/09 09:54:30 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 # include <math.h>
 # include "parsing.h"
 
-# define WIN_WIDTH 1248
-# define WIN_HEIGHT 800
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 994
 
-# define PLAYER_SIZE_RATIO 3
+# define PLAYER_SIZE_RATIO 4
 
-# define SPEED 0.03f
+# define SPEED 0.05f
 # define R_SPEED 0.02f
 
 # define FOV_ANGLE 1.04719755119659774615 // (M_PI/3) 60 degrees
-# define FOV_RAYS 180 // Number of rays in the field of view
+
+# define DOOR_CLOSED 'D'
 
 enum e_opcode
 {
@@ -79,6 +80,8 @@ typedef struct s_game
 	t_image	img;
 	int		keys_pressed[6];
 	double	mouse_accumulator;
+	int		mouse_enabled;
+	int		animation_frame;
 }	t_game;
 
 typedef struct s_data
@@ -95,7 +98,8 @@ typedef struct s_data
 int			close_window(t_data *data);
 
 /* ===== INIT ===== */
-t_minimap	init_minimap(char **map);
+void		init_data(t_data *data, t_player *player,
+				t_basic_elements *elements);
 t_game		*init_game(void);
 
 /* ===== EVENTS ===== */
@@ -150,5 +154,8 @@ void		draw_minimap_to_image(t_data *data);
 /* ===== DRAWING ===== */
 void		put_pixel_to_image(t_image img, int x, int y, int color);
 void		draw_image(t_data *data);
+
+/* ===== DRAWING ===== */
+void		interact_with_door(t_data *data);
 
 #endif

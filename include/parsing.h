@@ -6,25 +6,25 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:58:00 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/07 14:18:15 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:56:22 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../libft/include/libft.h"
-# include "../minilibx-linux/mlx.h"
+#include "../libft/include/libft.h"
+#include "../minilibx-linux/mlx.h"
 
-# define M_PI 3.14159265358979323846
+#define M_PI 3.14159265358979323846
 
 typedef struct s_texture
 {
-    void    *img;
-    char    *addr;
-    int     width;
-    int     height;
-    int     bits_per_pixel;
-    int     line_length;
-    int     endian;
-}   t_texture;
+	void	*img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_texture;
 
 typedef struct s_player
 {
@@ -35,8 +35,11 @@ typedef struct s_player
 
 typedef struct s_basic_elements
 {
-	char		*north_texture;
-	t_texture	north;
+	char		*north_texture1;
+	t_texture	north1;
+	char		*north_texture2;
+	t_texture	north2;
+	t_texture	north_curr;
 	char		*south_texture;
 	t_texture	south;
 	char		*west_texture;
@@ -45,6 +48,7 @@ typedef struct s_basic_elements
 	t_texture	east;
 	int			floor_colour;
 	int			ceiling_colour;
+	t_texture	door;
 	char		**map;
 }				t_basic_elements;
 

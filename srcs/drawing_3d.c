@@ -6,16 +6,13 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:13:01 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 12:01:49 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:24:42 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/**
- * Disegna il soffitto per una colonna
- * Dal top dello schermo fino all'inizio della parete
- */
+// Draws ceiling for a column from top to wall start
 static void	draw_ceiling_column(t_data *data, int x, int ceiling_end)
 {
 	int	y;
@@ -29,10 +26,7 @@ static void	draw_ceiling_column(t_data *data, int x, int ceiling_end)
 	}
 }
 
-/**
- * Disegna il pavimento per una colonna  
- * Dalla fine della parete al bottom dello schermo
- */
+// Draws floor for a column from wall end to bottom
 static void	draw_floor_column(t_data *data, int x, int floor_start)
 {
 	int	y;
@@ -45,9 +39,7 @@ static void	draw_floor_column(t_data *data, int x, int floor_start)
 	}
 }
 
-/**
- * Versione aggiornata della render_single_column con texture
- */
+// Renders a single column with textured walls
 static void	render_single_column_textured(t_data *data, int x, float wall_dist)
 {
 	int	wall_height;
@@ -64,10 +56,7 @@ static void	render_single_column_textured(t_data *data, int x, float wall_dist)
 	draw_floor_column(data, x, draw_end);
 }
 
-/**
- * Funzione principale che renderizza l'intera vista 3D
- * Lancia un raggio per ogni colonna dello schermo
- */
+// Main 3D rendering function that casts rays for each screen column
 void	draw_3d_to_image(t_data *data)
 {
 	int		x;

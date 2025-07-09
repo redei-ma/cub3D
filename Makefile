@@ -28,7 +28,8 @@ SRCS =	srcs/main.c \
 		srcs/drawing_3d_utils.c \
 		srcs/drawing_3d.c \
 		srcs/drawing_minimap.c \
-		srcs/drawing.c
+		srcs/drawing.c \
+		srcs/doors.c
 
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -66,9 +67,13 @@ fclean: clean
 	@echo "Removing library and executables..."
 	@rm -rf $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --quiet
+	@rm -rf $(MINILIBX)
+
+remove:
+	@echo "Removing minilibx directry..."
 	rm -rf $(MINILIBX_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean remove re
 .SILENT:

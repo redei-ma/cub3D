@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 12:10:02 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/07 12:11:04 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:50:07 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void	draw_minimap_to_image(t_data *data)
 			if (data->map[y][x] == '1')
 				draw_tile_to_image(data, x * data->mini.tile_size_x,
 					y * data->mini.tile_size_y, 0xFFFFFF);
+			else if (data->map[y][x] == 'D')
+				draw_tile_to_image(data, x * data->mini.tile_size_x,
+					y * data->mini.tile_size_y, 0x485121);
 			else if (data->map[y][x] == ' ')
 				;
 			else
