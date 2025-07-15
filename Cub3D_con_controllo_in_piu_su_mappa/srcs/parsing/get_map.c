@@ -6,7 +6,7 @@
 /*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:06:45 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/15 05:43:21 by ale              ###   ########.fr       */
+/*   Updated: 2025/07/15 05:48:38 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	get_map(t_basic_elements *str, int fd, t_player *start)
 	if (str->map == NULL)
 		return (free_basic_elements(str), 0);
 	if (check_surrounded_by_wall(str->map, ft_countlines(map)) == 0)
-		return (free_basic_elements(str), free(map_line), 0);//capre perche qua serve freeare mapline ma sotto su validate map no
+		return (free_basic_elements(str), free(map_line), 0);//capire perche qua serve freeare mapline ma sotto su validate map no
 	if (validate_map(map_line, start) == 0)
 		return (free_basic_elements(str), 0);
 	return (1);
