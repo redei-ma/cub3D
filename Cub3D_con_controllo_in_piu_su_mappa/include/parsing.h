@@ -6,7 +6,7 @@
 /*   By: ale <ale@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:58:00 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/15 04:39:49 by ale              ###   ########.fr       */
+/*   Updated: 2025/07/15 05:43:03 by ale              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		fill(char **map, int *size, t_player current, char *target);
 int		validate_map(char *map_line, t_player *start);
 
 //check_surrounded_by_wall
-int		check_surrounded_by_wall(char **map);
+int		check_surrounded_by_wall(char **map, int height);
 
 //strjoin_m
 char	*ft_strjoin_m(char const *s1, char const *s2);
