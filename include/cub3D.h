@@ -6,7 +6,7 @@
 /*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:35:01 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/16 11:00:11 by redei-ma         ###   ########.fr       */
+/*   Updated: 2025/07/16 11:42:21 by redei-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_dda
 	float	delta_dist_y;	// Distance ray travels for Y-direction unit step
 	float	side_dist_x;	// Distance from ray position to next X grid line
 	float	side_dist_y;	// Distance from ray position to next Y grid line
-	float	perp_wall_dist	// Perpendicular distance to wall (fisheye corrected)
+	float	perp_wall_dist;	// Perpendicular distance to wall (fisheye corrected)
 	int		step_x;			// X-direction step (+1 or -1)
 	int		step_y;			// Y-direction step (+1 or -1)
 	int		side;			// Which side was hit (0=vertical, 1=horizontal)
@@ -69,7 +69,7 @@ typedef struct s_image
 {
 	void	*img;			// MLX image pointer
 	char	*addr;			// Memory address of image data
-	int		bits_per_pixel	// Color depth information
+	int		bits_per_pixel;	// Color depth information
 	int		line_length;	// Bytes per image line
 	int		endian;			// Byte order information
 }	t_image;
@@ -83,7 +83,7 @@ typedef struct s_minimap
 	int		map_width;		// Width of map in grid cells
 	int		map_height;		// Height of map in grid cells
 	float	minimap_width;	// Minimap width in pixels
-	float	minimap_height	// Minimap height in pixels
+	float	minimap_height;	// Minimap height in pixels
 	float	tile_size_x;	// X size of each tile in pixels
 	float	tile_size_y;	// Y size of each tile in pixels
 }	t_minimap;

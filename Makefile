@@ -4,33 +4,35 @@ CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -lXext -lX11 -lm -lz
 VALGRIND = valgrind  --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes
 
-SRCS =	srcs/main.c \
-		srcs/parsing/parsing.c\
-		srcs/parsing/get_elements.c \
-		srcs/parsing/free_vari.c \
-		srcs/parsing/get_map.c \
-		srcs/parsing/ft_split_len.c \
-		srcs/parsing/validate_map.c \
-		srcs/parsing/ft_strjoin_m.c \
-		srcs/parsing/check_all_characters_are_present.c \
-		srcs/parsing/get_colors.c \
-		srcs/parsing/get_texture.c \
-		srcs/parsing/create_map_line.c \
-		srcs/parsing/check_surrounded_by_wall.c \
-		srcs/init.c \
-		srcs/events.c \
-		srcs/mouse_events.c \
-		srcs/dda.c \
-		srcs/collision.c \
-		srcs/movement.c \
-		srcs/load_textures.c \
-		srcs/texture_utils.c \
-		srcs/render_textures.c \
-		srcs/drawing_3d_utils.c \
-		srcs/drawing_3d.c \
-		srcs/drawing_minimap.c \
-		srcs/drawing.c \
-		srcs/doors.c
+SRCS_DIR = srcs
+SRCS_FILE =	main.c \
+			parsing/parsing.c\
+			parsing/get_elements.c \
+			parsing/free_vari.c \
+			parsing/get_map.c \
+			parsing/ft_split_len.c \
+			parsing/validate_map.c \
+			parsing/ft_strjoin_m.c \
+			parsing/check_all_characters_are_present.c \
+			parsing/get_colors.c \
+			parsing/get_texture.c \
+			parsing/create_map_line.c \
+			parsing/check_surrounded_by_wall.c \
+			init.c \
+			events.c \
+			mouse_events.c \
+			dda.c \
+			collision.c \
+			movement.c \
+			load_textures.c \
+			texture_utils.c \
+			render_textures.c \
+			drawing_3d_utils.c \
+			drawing_3d.c \
+			drawing_minimap.c \
+			drawing.c \
+			doors.c
+SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILE))
 
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
