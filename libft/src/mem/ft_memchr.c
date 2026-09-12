@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 10:58:08 by redei-ma          #+#    #+#             */
-/*   Updated: 2024/12/05 17:00:44 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
@@ -29,13 +17,13 @@ void	*ft_memchr(const void *s, int c, size_t n)
 
 /* int main()
 {
-	char str[500] = "bonjourno";
+	char str[500] = "goodmorning";
 	int c = 0;
 	int	n = 20;
 	char *result_ft = ft_memchr(str, c, n);
     char *result_orig = memchr(str, c, n);
 
-	printf("Funzione ricreata: %s\n", result_ft);
-	printf("Funzione originale: %s\n", result_orig);
+	printf("Reimplemented function: %s\n", result_ft);
+	printf("Original function: %s\n", result_orig);
 	return 0;
 } */

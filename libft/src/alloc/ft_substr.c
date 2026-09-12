@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 13:50:42 by redei-ma          #+#    #+#             */
-/*   Updated: 2024/12/05 17:02:20 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -33,8 +21,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 /* int main()
 {
-	char str[] = "Ciao belli come state???";
+	char str[] = "Hello folks how are you???";
 
-	printf("%s", ft_substr(str, 11, 11));
+	printf("%s", ft_substr(str, 12, 11));
 	return 0;
 } */

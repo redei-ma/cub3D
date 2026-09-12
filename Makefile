@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 MLXFLAGS = -lXext -lX11 -lm -lz
 VALGRIND = valgrind  --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes
 
@@ -8,7 +8,7 @@ SRCS_DIR = srcs
 SRCS_FILE =	main.c \
 			parsing/parsing.c\
 			parsing/get_elements.c \
-			parsing/free_vari.c \
+			parsing/free_utils.c \
 			parsing/get_map.c \
 			parsing/ft_split_len.c \
 			parsing/validate_map.c \
@@ -34,6 +34,9 @@ SRCS_FILE =	main.c \
 			doors.c
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILE))
 
+HDRS = include/cub3D.h include/parsing.h
+INCLUDES = -Iinclude -I$(LIBFT_DIR)/include -I$(MINILIBX_DIR)
+
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 MINILIBX_DIR = ./minilibx-linux
@@ -54,9 +57,13 @@ $(MINILIBX):
 	@echo "Compiling MinilibX..."
 	@$(MAKE) -C $(MINILIBX_DIR) --quiet
 
-$(NAME): $(LIBFT) $(MINILIBX) $(SRCS)
+$(NAME): $(LIBFT) $(MINILIBX) $(SRCS) $(HDRS)
 	@echo "Compiling $(NAME)..."
-	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(MINILIBX) $(MLXFLAGS) -Iinclude -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(MINILIBX) $(MLXFLAGS) $(INCLUDES) -o $(NAME)
+
+debug: fclean $(LIBFT) $(MINILIBX)
+	@echo "Compiling $(NAME) with debug symbols..."
+	@$(CC) $(CFLAGS) -g $(SRCS) $(LIBFT) $(MINILIBX) $(MLXFLAGS) $(INCLUDES) -o $(NAME)
 
 val: $(NAME)
 	$(VALGRIND) ./$(NAME) $(ARGS)
@@ -64,19 +71,20 @@ val: $(NAME)
 clean:
 	@echo "Removing object files..."
 	@$(MAKE) -C $(LIBFT_DIR) clean --quiet
-	$(MAKE) -C $(MINILIBX_DIR) clean --quiet
+	@if [ -f $(MINILIBX_DIR)/Makefile.gen ]; then \
+		$(MAKE) -C $(MINILIBX_DIR) clean --quiet; fi
 
 fclean: clean
-	@echo "Removing library and executables..."
-	@rm -rf $(NAME)
+	@echo "Removing build output..."
+	@rm -rf $(NAME) $(NAME).dSYM
 	@$(MAKE) -C $(LIBFT_DIR) fclean --quiet
 	@rm -rf $(MINILIBX)
 
 remove:
-	@echo "Removing minilibx directry..."
-	rm -rf $(MINILIBX_DIR)
+	@echo "Removing minilibx directory..."
+	@rm -rf $(MINILIBX_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean remove re
+.PHONY: all clean fclean remove re debug
 .SILENT:

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   drawing_3d.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:13:01 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/16 11:07:00 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3D.h"
 
 /**
@@ -21,7 +9,7 @@
  * 
  * This function fills the upper portion of a screen column with the ceiling color.
  * It draws from the top of the screen (y=0) down to where the wall begins.
- * The ceiling color is stored in data->elements->ceiling_colour.
+ * The ceiling color is stored in data->elements->ceiling_color.
  */
 static void	draw_ceiling_column(t_data *data, int x, int ceiling_end)
 {
@@ -31,7 +19,7 @@ static void	draw_ceiling_column(t_data *data, int x, int ceiling_end)
 	while (y < ceiling_end)
 	{
 		put_pixel_to_image(data->game->img, x, y,
-			data->elements->ceiling_colour);
+			data->elements->ceiling_color);
 		y++;
 	}
 }
@@ -45,7 +33,7 @@ static void	draw_ceiling_column(t_data *data, int x, int ceiling_end)
  * 
  * This function fills the lower portion of a screen column with the floor color.
  * It draws from where the wall ends down to the bottom of the screen.
- * The floor color is stored in data->elements->floor_colour.
+ * The floor color is stored in data->elements->floor_color.
  */
 static void	draw_floor_column(t_data *data, int x, int floor_start)
 {
@@ -54,7 +42,7 @@ static void	draw_floor_column(t_data *data, int x, int floor_start)
 	y = floor_start;
 	while (y < WIN_HEIGHT)
 	{
-		put_pixel_to_image(data->game->img, x, y, data->elements->floor_colour);
+		put_pixel_to_image(data->game->img, x, y, data->elements->floor_color);
 		y++;
 	}
 }

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 10:58:20 by redei-ma          #+#    #+#             */
-/*   Updated: 2024/12/05 17:00:48 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
@@ -36,7 +24,7 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	int s2[] = {1, 0, 11, 84};
 	int	n = 50;
 
-	printf("Funzione ricreata: %d\n", ft_memcmp(s1, s2, n));
-	printf("Funzione originale: %d\n", memcmp(s1, s2, n));
+	printf("Reimplemented function: %d\n", ft_memcmp(s1, s2, n));
+	printf("Original function: %d\n", memcmp(s1, s2, n));
 	return 0;
 } */

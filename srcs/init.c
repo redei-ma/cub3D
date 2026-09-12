@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 10:15:44 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/16 11:10:13 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3D.h"
 
 /**
@@ -35,7 +23,7 @@ static t_minimap	init_minimap(char **map)
 	t_minimap	mini;
 
 	mini.map_width = ft_strlen(map[0]);
-	mini.map_height = ft_countlines((const char **)map);
+	mini.map_height = ft_matlen(map);
 	mini.minimap_width = WIN_WIDTH * 0.2;
 	mini.minimap_height = WIN_HEIGHT * 0.2;
 	mini.tile_size_x = mini.minimap_width / mini.map_width;

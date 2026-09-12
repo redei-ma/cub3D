@@ -1,4 +1,29 @@
-.DS_Store
-.vscode
-a.out
+# build artifacts
 *.o
+*.a
+*.d
+*.gch
+*.dSYM/
+.obj/
+a.out
+/cub3D
+
+# cloned by the Makefile on every build
+minilibx-linux/
+
+# debugging leftovers
+core
+vgcore.*
+*.supp
+
+# tooling and editors
+.clangd
+.vscode/
+.idea/
+*.swp
+*~
+.claude/
+
+# macOS
+.DS_Store
+._*

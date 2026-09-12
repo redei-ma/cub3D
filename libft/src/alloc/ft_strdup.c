@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 10:59:21 by redei-ma          #+#    #+#             */
-/*   Updated: 2024/12/05 17:01:35 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 char	*ft_strdup(const char *src)
@@ -28,11 +16,11 @@ char	*ft_strdup(const char *src)
 
 /* int main(void)
 {
-	char *src = "ciao mondo";
+	char *src = "hello world";
 	char *dest1 = ft_strdup(src);
 	char *dest2 = strdup(src);
-	printf("Funzione ricreata: %s\n", dest1);
-	printf("Funzione originale: %s\n", dest2);
+	printf("Reimplemented function: %s\n", dest1);
+	printf("Original function: %s\n", dest2);
 	free (dest1);
 	free (dest2);
 	return 0;

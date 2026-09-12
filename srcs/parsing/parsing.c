@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 18:57:24 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/16 11:00:46 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
 
 int	ft_strlen_m(const char *s)
@@ -48,7 +36,7 @@ int	check_cub(char *s)
 	return (is_valid);
 }
 
-void	init_basic_elements(t_basic_elements *str)
+static void	init_basic_elements(t_basic_elements *str)
 {
 	str->north_texture1 = NULL;
 	str->south_texture = NULL;
@@ -64,6 +52,23 @@ void	init_basic_elements(t_basic_elements *str)
 	str->map = NULL;
 }
 
+/**
+ * Reads and validates the whole scene file
+ *
+ * @param argc: argument count, exactly two are expected
+ * @param argv: argv[1] is the path to the .cub file
+ * @param elements_struct: receives textures, colors and the map
+ * @param start: receives the player position and starting angle
+ * @return 1 if the scene is usable, 0 on the first failure
+ *
+ * Nothing is opened before argc is checked, which is what lets every
+ * function downstream take argv[1] for granted.
+ *
+ * The order is imposed by the format: the six elements come first and in
+ * any order among themselves, the map always last, so the file is read once
+ * from top to bottom and the descriptor is handed to get_map still open,
+ * positioned exactly where the elements ended.
+ */
 int	handle_parsing(int argc, char **argv, t_basic_elements *elements_struct, \
 	t_player *start)
 {
@@ -71,7 +76,7 @@ int	handle_parsing(int argc, char **argv, t_basic_elements *elements_struct, \
 
 	if (argc < 2)
 	{
-		error("no arguments dummy", NULL);
+		error("usage: ./cub3D <map.cub>", NULL);
 		return (0);
 	}
 	if (!check_cub(argv[1]))

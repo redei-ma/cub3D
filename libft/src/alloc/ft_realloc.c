@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 17:13:42 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/04/01 20:27:42 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
@@ -41,10 +29,10 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 
 /* int main ()
 {
-	char *prova = ft_calloc(10, 1);
-	prova[0] = 'c';
-	prova[1] = 'b';
-	printf("%s\n", prova);
-	prova = ft_realloc(prova, 10, 3);
-	printf("%s\n", prova);
+	char *buf = ft_calloc(10, 1);
+	buf[0] = 'c';
+	buf[1] = 'b';
+	printf("%s\n", buf);
+	buf = ft_realloc(buf, 10, 3);
+	printf("%s\n", buf);
 } */

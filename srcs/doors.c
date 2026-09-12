@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   doors.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 10:04:29 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/16 11:03:22 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3D.h"
 
 #define MIN_DIST 1.5f	// Minimum distance for door interaction
@@ -31,7 +19,7 @@ static int	is_position_valid(t_data *data, int check_x, int check_y)
 {
 	if (check_x < 0 || check_y < 0)
 		return (0);
-	if (check_y >= ft_countlines((const char **)data->map))
+	if (check_y >= ft_matlen(data->map))
 		return (0);
 	if (check_x >= (int)ft_strlen(data->map[check_y]))
 		return (0);

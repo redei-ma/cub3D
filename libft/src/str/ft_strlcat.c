@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 10:59:41 by redei-ma          #+#    #+#             */
-/*   Updated: 2024/12/05 17:01:47 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
@@ -39,7 +27,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	char src[] = "body asked you";
 	char dest[] = "however, no";
-	printf("Funzione ricreata: %zu\n", ft_strlcat(dest, src, 0));
-	//printf("Funzione originale: %d", strlcat(dest, src, 10));
+	printf("Reimplemented function: %zu\n", ft_strlcat(dest, src, 0));
+	//printf("Original function: %d", strlcat(dest, src, 10));
 	return 0;	
 } */

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_colors.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 17:46:30 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/07 14:50:13 by ade-ross         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
 
 int	skip_initial_spaces_and_initial_checks(char **new_line, int *i)
@@ -27,7 +15,19 @@ int	skip_initial_spaces_and_initial_checks(char **new_line, int *i)
 	return (1);
 }
 
-int	convert_color(int r, int g, int b)
+/**
+ * Packs three channels into the single integer MiniLibX expects
+ *
+ * @param r: red, 0-255
+ * @param g: green, 0-255
+ * @param b: blue, 0-255
+ * @return the color as 0xRRGGBB
+ *
+ * The image buffer stores one integer per pixel, so floor and ceiling are
+ * kept already packed rather than as three values to combine at every
+ * frame.
+ */
+static int	convert_color(int r, int g, int b)
 {
 	int	c;
 
@@ -37,18 +37,18 @@ int	convert_color(int r, int g, int b)
 	return (c);
 }
 
-void	put_colors(t_basic_elements *str, int color[3], char first_letter)
+static void	put_colors(t_basic_elements *str, int color[3], char first_letter)
 {
 	int	num;
 
 	num = convert_color(color[0], color[1], color[2]);
 	if (first_letter == 'F')
-		str->floor_colour = num;
+		str->floor_color = num;
 	if (first_letter == 'C')
-		str->ceiling_colour = num;
+		str->ceiling_color = num;
 }
 
-int	check_theres_nothing_after_colors(char *new_line, int len, int j)
+static int	check_theres_nothing_after_colors(char *new_line, int len, int j)
 {
 	if (j == 2)
 	{
@@ -62,6 +62,19 @@ int	check_theres_nothing_after_colors(char *new_line, int len, int j)
 	return (1);
 }
 
+/**
+ * Parses one F or C line into three channel values
+ *
+ * @param str: receives the packed color
+ * @param new_line: the rest of the line, in the form R,G,B
+ * @param first_letter: F for the floor, C for the ceiling
+ * @return 1 if the three values are valid, 0 otherwise
+ *
+ * The digit count is checked before the conversion and not after: at most
+ * three digits, or four when a sign is written. That is what keeps the
+ * value inside the int range, so the 0-255 test that follows is about the
+ * color being legal and not about the number having overflowed.
+ */
 int	get_colors(t_basic_elements *str, char *new_line, char first_letter)
 {
 	int	i;

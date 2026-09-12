@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_elements.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 23:37:56 by ale               #+#    #+#             */
-/*   Updated: 2025/07/02 12:23:31 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
 
 int	get_element(t_basic_elements *str, char *new_line)
@@ -33,7 +21,7 @@ int	get_element(t_basic_elements *str, char *new_line)
 	}
 }
 
-bool	skip_empty_line_and_initial_spaces(int *i, char *new_line)
+static bool	skip_empty_line_and_initial_spaces(int *i, char *new_line)
 {
 	bool	skip_line;
 
@@ -57,6 +45,18 @@ void	finish_get_next_line(char *new_line, int fd)
 	close(fd);
 }
 
+/**
+ * Reads the six elements that must precede the map
+ *
+ * @param str: receives the four texture paths and the two colors
+ * @param fd: the scene file, left positioned on the first map row
+ * @return 1 once all six are found, 0 on a malformed or truncated file
+ *
+ * The subject allows the six to appear in any order and to be separated by
+ * any number of empty lines, so the loop counts elements rather than lines
+ * and skips whatever lies between them. Reaching the end of the file before
+ * the sixth is a syntax error, not an empty map: the map has to come after.
+ */
 int	get_basic_elements(t_basic_elements *str, int fd)
 {
 	char	*new_line;

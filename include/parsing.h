@@ -1,20 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 18:58:00 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/16 11:00:42 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "../libft/include/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "libft.h"
+# include "mlx.h"
+# include <stdbool.h>
 
 # define M_PI 3.14159265358979323846	// Pi constant for angle calculations
 
@@ -59,8 +48,8 @@ typedef struct s_basic_elements
 	t_texture	west;				// West wall texture data
 	char		*east_texture;		// Path to east wall texture
 	t_texture	east;				// East wall texture data
-	int			floor_colour;		// Floor color (RGB)
-	int			ceiling_colour;		// Ceiling color (RGB)
+	int			floor_color;		// Floor color (RGB)
+	int			ceiling_color;		// Ceiling color (RGB)
 	t_texture	door;				// Door texture data
 	char		**map;				// 2D map array
 }				t_basic_elements;
@@ -83,11 +72,10 @@ int		get_texture(t_basic_elements *str, char *new_line);
 
 //get_elements
 void	finish_get_next_line(char *new_line, int fd);
-int		get_texture(t_basic_elements *str, char *new_line);
 int		get_element(t_basic_elements *str, char *new_line);
 int		get_basic_elements(t_basic_elements *str, int fd);
 
-//free_vari
+//free_utils
 void	free_map(char **map);
 void	free_basic_elements(t_basic_elements *str);
 
@@ -105,7 +93,7 @@ char	**create_map(char *map_line, int len);
 int		get_longest_line(char *map_line);
 int		get_map(t_basic_elements *str, int fd, t_player *start);
 
-//ft_split_leb
+//ft_split_len
 char	**ft_split_len(char const *s, char c, int len, int i);
 
 //validate_map
@@ -118,9 +106,5 @@ int		check_surrounded_by_wall(char **map, int height);
 
 //strjoin_m
 char	*ft_strjoin_m(char const *s1, char const *s2);
-
-//check_all_characters_are_present
-int		check_characters_array(int *characters_arr, char *map_line);
-int		check_all_characters_are_present(char *map_line);
 
 #endif

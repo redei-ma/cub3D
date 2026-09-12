@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 11:52:12 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/01 15:46:28 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -22,7 +10,6 @@
 # include <stdint.h>
 # include <fcntl.h>
 # include <stdarg.h>
-# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -33,8 +20,8 @@ typedef struct s_list
 /* Root functions */
 int		ft_abs(int x);
 int		ft_atoi(char *str);
+int		ft_natoi(char *str);
 void	ft_bzero(void *s, size_t n);
-int		ft_countlines(const char **mat);
 char	**ft_free_char_mat(char **mat);
 void	**ft_free_mat(void **mat, int size);
 int		ft_matlen(char **mat);

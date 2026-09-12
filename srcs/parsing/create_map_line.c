@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   create_map_line.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 20:11:50 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/30 20:22:39 by ade-ross         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
 
-void	skip_init_lines(char **new_line, int fd)
+static void	skip_init_lines(char **new_line, int fd)
 {
 	while (new_line[0] && new_line[0][0] == '\n' && new_line[0][1] == '\0')
 	{
@@ -36,6 +24,21 @@ int	check_theres_nothing_after_map(int fd, char *new_line)
 	return (map_is_valid);
 }
 
+/**
+ * Reads the map out of the file and returns it as a single string
+ *
+ * @param fd: the scene file, positioned after the six elements
+ * @param str: ignored, reset to NULL on entry
+ * @return the map with its rows still separated by newlines, or NULL
+ *
+ * The rows are accumulated by joining onto a string that starts as NULL,
+ * which is why ft_strjoin_m treats a NULL argument as an empty string
+ * instead of refusing it: the first join has nothing to join to.
+ *
+ * An empty line ends the map, and what follows must be empty too: the
+ * subject puts the map last, so anything after it is a malformed scene
+ * rather than a second map.
+ */
 char	*create_map_line(int fd, char *str)
 {
 	char	*temp;

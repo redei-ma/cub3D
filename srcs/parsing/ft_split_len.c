@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split_len.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 17:04:47 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/06/30 17:05:42 by ade-ross         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
 
 static int	n_of_st_m(char const *s, char c, int *flag, int *j)
@@ -65,7 +53,7 @@ static char	*copy_word(char *arrst, char const *s, char c, int len)
 	return (arrst);
 }
 
-char	**malloc_line(char **arrst, int i, int len)
+static char	**malloc_line(char **arrst, int i, int len)
 {
 	arrst[i] = malloc((len + 1) * sizeof(char));
 	if (arrst[i] == NULL)
@@ -76,6 +64,21 @@ char	**malloc_line(char **arrst, int i, int len)
 	return (arrst);
 }
 
+/**
+ * Splits the map into rows, padding every row to the same length
+ *
+ * @param s: the raw map, rows separated by c
+ * @param c: the separator, a newline here
+ * @param len: the length every row is padded to, with spaces
+ * @param i: index to start from, reset to 0 on entry
+ * @return a NULL-terminated array of rows, or NULL if an allocation failed
+ *
+ * This is not ft_split, and the padding is why it exists: maps are written
+ * ragged, while the renderer and the flood fill both index the grid as a
+ * rectangle. A space is the right filler because the subject counts spaces
+ * as part of the map, and check_surrounded_by_wall already refuses any
+ * walkable cell that touches one.
+ */
 char	**ft_split_len(char const *s, char c, int len, int i)
 {
 	char	**arrst;

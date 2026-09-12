@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 11:00:35 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/04/16 15:55:51 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -38,7 +26,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	char *s2 = "abc\xfdxx";
 	int	n = 19;
 
-	printf("Funzione ricreata: %d\n", ft_strncmp(s1, s2, n));
-	printf("Funzione originale: %d\n", strncmp(s1, s2, n));
+	printf("Reimplemented function: %d\n", ft_strncmp(s1, s2, n));
+	printf("Original function: %d\n", strncmp(s1, s2, n));
 	return 0;
 } */

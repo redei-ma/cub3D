@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   collision.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 11:50:23 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/07/16 10:58:43 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3D.h"
 
 /**
@@ -31,7 +19,7 @@ int	is_wall_hit(t_data *data, int map_x, int map_y)
 
 	if (map_x < 0 || map_y < 0)
 		return (1);
-	if (map_y >= ft_countlines((const char **)data->map))
+	if (map_y >= ft_matlen(data->map))
 		return (1);
 	if (map_x >= (int)ft_strlen(data->map[map_y]))
 		return (1);

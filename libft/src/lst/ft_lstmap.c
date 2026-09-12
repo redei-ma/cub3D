@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 23:24:10 by redei-ma          #+#    #+#             */
-/*   Updated: 2024/12/06 13:36:58 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
@@ -49,7 +37,7 @@ void	*ft_lstchange(void *content)
 
 int main()
 {
-	t_list	*node = ft_lstnew(ft_strdup("voglio andare a casa"));
+	t_list	*node = ft_lstnew(ft_strdup("i want to go home"));
 	node -> next = ft_lstnew(ft_strdup("go home"));
 	
 	t_list *head = node;

@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: redei-ma <redei-ma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 16:37:58 by redei-ma          #+#    #+#             */
-/*   Updated: 2025/02/24 16:49:17 by redei-ma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line_bonus.h"
 
-char	*find_newline(char **str)
+static char	*find_newline(char **str)
 {
 	char	*fin;
 	char	*tmp;
@@ -41,7 +29,7 @@ char	*find_newline(char **str)
 	return (fin);
 }
 
-int	read_line(char **s, int fd)
+static int	read_line(char **s, int fd)
 {
 	char	*buff;
 	char	*tmp;
@@ -66,7 +54,7 @@ int	read_line(char **s, int fd)
 	return (bytes_read);
 }
 
-char	*test(char **leftovers, char **final, int bytes)
+static char	*test(char **leftovers, char **final, int bytes)
 {
 	if (bytes < 0)
 	{
@@ -97,6 +85,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	// the array is indexed by fd, and nothing stops the system from handing
+	// out a descriptor past its end: the bound comes from the array itself
+	if ((size_t)fd >= sizeof(leftovers) / sizeof(*leftovers))
+		return (NULL);
 	if (!leftovers[fd])
 		leftovers[fd] = (ft_strdup(""));
 	if (!leftovers[fd])
@@ -118,24 +110,24 @@ char	*get_next_line(int fd)
 {
     int fd1, fd2;
     char *line1, *line2;
-	if (argc != 3) // Due file richiesti come input
+	if (argc != 3) // two input files are required
     {
         fprintf(stderr, "Usage: %s <file1> <file2>\n", argv[0]);
         return (EXIT_FAILURE);
-    }    // Apertura del primo file
+    }    // open the first file
     fd1 = open(argv[1], O_RDONLY);
     if (fd1 < 0)
     {
         perror("Error opening file 1");
         return (EXIT_FAILURE);
-    }    // Apertura del secondo file
+    }    // open the second file
     fd2 = open(argv[2], O_RDONLY);
     if (fd2 < 0)
     {
         perror("Error opening file 2");
-        close(fd1); // Chiude il primo file prima di uscire
+        close(fd1); // close the first file before leaving
         return (EXIT_FAILURE);
-    }    // Leggi alternativamente dai due file
+    }    // read from both files alternately
     while (1)
     {
         line1 = get_next_line(fd1);

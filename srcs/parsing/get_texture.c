@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_texture.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ade-ross <ade-ross@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 17:45:14 by ade-ross          #+#    #+#             */
-/*   Updated: 2025/07/07 15:10:07 by ade-ross         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
 
-int	skip_initial_spaces_for_texture(char *new_line, int *i)
+static int	skip_initial_spaces_for_texture(char *new_line, int *i)
 {
 	while (new_line[*i] == ' ')
 		(*i)++;
@@ -41,7 +29,7 @@ int	check_texture_is_valid(char *texture)
 	return (1);
 }
 
-void	put_texture(t_basic_elements *str, char *new_line, char *texture)
+static void	put_texture(t_basic_elements *str, char *new_line, char *texture)
 {
 	if (new_line[0] == 'N')
 		str->north_texture1 = texture;
@@ -53,6 +41,21 @@ void	put_texture(t_basic_elements *str, char *new_line, char *texture)
 		str->east_texture = texture;
 }
 
+/**
+ * Parses one NO, SO, WE or EA line and stores the texture path
+ *
+ * @param str: receives the path, owned from here on
+ * @param new_line: the whole line, identifier included
+ * @return 1 if the path is readable, 0 otherwise
+ *
+ * The path is checked with access(R_OK) here, at parse time, rather than
+ * when the image is loaded: a scene that names a missing texture is a
+ * malformed scene, and failing now means failing before a window is opened.
+ *
+ * The wall the texture belongs to is read from the first letter of the
+ * line, which is why only N, S, W and E are tested: the identifier was
+ * already matched by get_element.
+ */
 int	get_texture(t_basic_elements *str, char *new_line)
 {
 	int		i;
