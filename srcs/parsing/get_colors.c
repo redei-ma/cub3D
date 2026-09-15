@@ -1,6 +1,6 @@
 #include "parsing.h"
 
-int	skip_initial_spaces_and_initial_checks(char **new_line, int *i)
+static int	skip_initial_spaces_and_initial_checks(char **new_line, int *i)
 {
 	while (new_line[0][*i] == ' ')
 		(*i)++;

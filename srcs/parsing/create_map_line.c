@@ -9,7 +9,7 @@ static void	skip_init_lines(char **new_line, int fd)
 	}
 }
 
-int	check_theres_nothing_after_map(int fd, char *new_line)
+static int	check_theres_nothing_after_map(int fd, char *new_line)
 {
 	int	map_is_valid;
 

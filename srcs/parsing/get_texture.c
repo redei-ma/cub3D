@@ -9,7 +9,7 @@ static int	skip_initial_spaces_for_texture(char *new_line, int *i)
 	return (1);
 }
 
-int	check_theres_nothing_after_texture(char *new_line, int len)
+static int	check_theres_nothing_after_texture(char *new_line, int len)
 {
 	while (new_line[len] == ' ')
 		len++;
@@ -18,7 +18,7 @@ int	check_theres_nothing_after_texture(char *new_line, int len)
 	return (1);
 }
 
-int	check_texture_is_valid(char *texture)
+static int	check_texture_is_valid(char *texture)
 {
 	if (access(texture, R_OK) == -1)
 	{

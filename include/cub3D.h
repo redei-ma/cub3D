@@ -119,7 +119,6 @@ int			key_release(int keycode, t_data *data);
 int			key_press(int keycode, t_data *data);
 
 /* ===== MOUSE EVENTS ===== */
-void		rotate_player_mouse(t_data *data, int delta_x);
 int			mouse_hook(int x, int y, t_data *data);
 
 /* ===== DDA ===== */
@@ -136,7 +135,6 @@ void		rotate_player(t_data *data, int direction);
 
 /* ===== TEXTURES ===== */
 void		free_all_textures(t_data *data);
-int			load_single_texture_file(t_data *data, t_texture *tex, char *path);
 int			init_all_texture_files(t_data *data);
 
 /* ===== TEXTURE UTILS ===== */

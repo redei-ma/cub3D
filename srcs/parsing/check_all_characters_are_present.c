@@ -10,7 +10,7 @@
  * Split out of check_all_characters_are_present because the Norm caps a
  * function at 25 lines, not because the two do different things.
  */
-int	check_characters_array(int *characters_arr, char *map_line)
+static int	check_characters_array(int *characters_arr, char *map_line)
 {
 	if (characters_arr[1] > 1)
 		return (error("too many starting points", map_line), 0);

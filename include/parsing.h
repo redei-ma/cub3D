@@ -57,17 +57,13 @@ typedef struct s_basic_elements
 //parsing
 int		ft_strlen_m(const char *s);
 void	error(char *s, char *line_to_free);
-int		check_cub(char *s);
 int		handle_parsing(int argc, char **argv, \
 		t_basic_elements *elements_struct, t_player *start);
 
 //get_colors
-int		skip_initial_spaces_and_initial_checks(char **new_line, int *i);
 int		get_colors(t_basic_elements *str, char *new_line, char first_letter);
 
 //get_texture
-int		check_theres_nothing_after_texture(char *new_line, int len);
-int		check_texture_is_valid(char *texture);
 int		get_texture(t_basic_elements *str, char *new_line);
 
 //get_elements
@@ -80,11 +76,9 @@ void	free_map(char **map);
 void	free_basic_elements(t_basic_elements *str);
 
 //check_all_characters_are_present
-int		check_characters_array(int *characters_arr, char *map_line);
 int		check_all_characters_are_present(char *map_line);
 
 //create_map_line
-int		check_theres_nothing_after_map(int fd, char *new_line);
 char	*create_map_line(int fd, char *str);
 
 //get_map

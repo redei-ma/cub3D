@@ -21,7 +21,7 @@ void	error(char *s, char *line_to_free)
 	write(2, "\n", 1);
 }
 
-int	check_cub(char *s)
+static int	check_cub(char *s)
 {
 	int	is_valid;
 

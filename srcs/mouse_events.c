@@ -15,7 +15,7 @@
  * The accumulator system ensures smooth rotation even with small mouse
  * movements and prevents the player from spinning too quickly.
  */
-void	rotate_player_mouse(t_data *data, int delta_x)
+static void	rotate_player_mouse(t_data *data, int delta_x)
 {
 	const double	mouse_sensitivity = R_SPEED / 10.0;
 

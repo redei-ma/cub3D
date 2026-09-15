@@ -43,7 +43,7 @@ void	free_all_textures(t_data *data)
  * 
  * If any step fails, the function cleans up partial resources and returns 0.
  */
-int	load_single_texture_file(t_data *data, t_texture *tex, char *path)
+static int	load_single_texture_file(t_data *data, t_texture *tex, char *path)
 {
 	tex->img = mlx_xpm_file_to_image(data->game->mlx, path,
 			&tex->width, &tex->height);
